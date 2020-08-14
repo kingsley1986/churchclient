@@ -61,7 +61,9 @@ export default function EventsList() {
         console.log(error);
       });
   }, []);
-  const matches = useMediaQuery(theme.breakpoints.down("xs"));
+  const matchesXs = useMediaQuery(theme.breakpoints.down("xs"));
+  const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
+
   const classes = useStyles();
 
   const nowIso = new Date();
@@ -93,13 +95,21 @@ export default function EventsList() {
     return "Ends:" + " " + moment(startDateTs).format("lll");
   };
 
+  const getEventTitle = (title) => {
+    if (title.length > 25) {
+      return title.substring(0, 24) + "..";
+    } else {
+      return title;
+    }
+  };
+
   return (
     <div className={classes.root}>
       <GridList
         cellHeight={420}
         className={classes.gridList}
         spacing={12}
-        cols={matches ? 1 : 3}
+        cols={matchesXs ? 1 : matchesMd ? 2 : 3}
       >
         {tileData.map((event, key) => {
           return (
@@ -120,7 +130,7 @@ export default function EventsList() {
                 }}
                 className={classes.cardheader}
               >
-                {event.title}
+                {getEventTitle(event.title)}
               </h3>
 
               <CardHeader
