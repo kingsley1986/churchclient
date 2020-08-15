@@ -1,215 +1,228 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Button, ButtonToolbar } from "react-bootstrap";
 import AddComingWithModal from "../components/coming-with-modal.component";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import { red } from "@material-ui/core/colors";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Grid from "@material-ui/core/Grid";
+import moment from "moment";
 
-const EventComment = (props) => (
-  <div>
-    <div className="blog-content">
-      <p>{props.eventcomment.description}</p>
-      <p>{props.eventcomment.name}</p>
-      <a href="" className="more-btn">
-        View More
-      </a>
-    </div>
-    <span className="blog-date">{props.eventcomment.createdAt}</span>
-  </div>
-);
+import FilledInput from "@material-ui/core/FilledInput";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 
-export default class EventAndComments extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      eventcomments: [],
-      event: "",
-      name: "",
-      description: "",
-      going: "",
-      addModalshow: false,
-    };
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.event === this.state.event) {
-      axios
-        .get(
-          "http://localhost:9000/events/" +
-            this.props.match.params.id +
-            "/eventcomments"
-        )
-        .then((response) => {
-          this.setState({ event: response.data });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  }
+export default function EventAndComments(props) {
+  const theme = useTheme();
+  const [eventComments, setTileData] = useState([]);
 
-  updateGoing = (going) => {
-    axios
-      .get(
-        "http://localhost:9000/events/" + this.props.match.params.id + "/going"
-      )
-      .then((response) => {
-        this.setState({ event: response.data });
-      });
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      maxWidth: 850,
+    },
+    media: {
+      height: 0,
+
+      paddingTop: "86%", // 16:9
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    expand: {
+      transform: "rotate(0deg)",
+      marginLeft: "auto",
+      transition: theme.transitions.create("transform", {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: "rotate(180deg)",
+    },
+    avatar: {
+      backgroundColor: red[500],
+    },
+  }));
+
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
   };
 
-  componentDidMount() {
+  useEffect(() => {
     axios
       .get(
         "http://localhost:9000/events/" +
-          this.props.match.params.id +
+          props.match.params.id +
           "/eventcomments"
       )
       .then((response) => {
-        this.setState({ event: response.data });
-        this.setState({ eventcomments: response.data.eventcomments });
+        setTileData(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
+  }, []);
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  const nowIso = new Date();
+  const getTitle = (startDateTs, endDateTs) => {
+    const now = Date.parse(nowIso);
+
+    if (endDateTs <= now) {
+      return "Started:" + " " + moment(startDateTs).format("LLLL");
+    }
+
+    if (startDateTs < now && endDateTs > now) {
+      return "Live:" + " " + moment(startDateTs).format("LLLL");
+    }
+
+    return "Starting:" + " " + moment(startDateTs).format("LLLL");
   };
 
-  onSubmit = (e) => {
+  const getEnded = (startDateTs, endDateTs) => {
+    const now = Date.parse(nowIso);
+
+    if (endDateTs <= now) {
+      return "Ended:" + " " + moment(startDateTs).format("LLLL");
+    }
+
+    if (startDateTs < now && endDateTs > now) {
+      return "Will End:" + " " + moment(startDateTs).format("LLLL");
+    }
+
+    return "Ends:" + " " + moment(startDateTs).format("LLLL");
+  };
+
+  const [eventDescription, setEventComment] = React.useState("");
+  const [name, setName] = React.useState("");
+
+  const handleChange = (parameter) => (event) => {
+    if (parameter === "name") {
+      setName(event.target.value);
+    }
+    if (parameter === "description") {
+      setEventComment(event.target.value);
+    }
+  };
+
+  const onSubmit = (e) => {
     e.preventDefault();
-
-    const data = {
-      name: this.state.name,
-      description: this.state.description,
-    };
-
     axios
       .post(
         "http://localhost:9000/events/" +
-          this.props.match.params.id +
+          props.match.params.id +
           "/eventcomment",
-        data
+        { name: name, description: eventDescription }
       )
-      .then((res) => {
-        this.setState({
-          name: "",
-          description: "",
-        });
-        this.props.history.push(
-          "/events/" + this.props.match.params.id + "/eventcomments"
-        );
-        console.log("Comment Created");
-
-        axios
-          .get(
-            "http://localhost:9000/events/" +
-              this.props.match.params.id +
-              "/eventcomments"
-          )
-          .then((response) => {
-            this.setState({ event: response.data });
-            this.setState({ eventcomments: response.data.eventcomments });
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+      .then(function (response) {
+        console.log(response);
       })
-      .catch((err) => {
-        console.log("Error in CreateBook!");
+      .catch(function (error) {
+        console.log(error);
       });
   };
 
-  render() {
-    const eventcomments = this.state.eventcomments;
-    let eventCommentList;
+  return (
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Card className={classes.root}>
+        <h3
+          style={{
+            background: "	#800000",
+            color: "white",
+            textAlign: "center",
+          }}
+          className={classes.cardheader}
+        >
+          {eventComments.title}
+        </h3>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              CB
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={getTitle(
+            Date.parse(eventComments.startingDate),
+            Date.parse(eventComments.closingDate)
+          )}
+          subheader={getEnded(
+            Date.parse(eventComments.startingDate),
+            Date.parse(eventComments.closingDate)
+          )}
+          style={{ background: "#DCDCDC" }}
+        />
+        <CardMedia
+          className={classes.media}
+          image={eventComments.eventImage}
+          title="Paella dish"
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {eventComments.description}
+          </Typography>
+        </CardContent>
+      </Card>
+      <form
+        className={classes.root}
+        noValidate
+        autoComplete="off"
+        onSubmit={onSubmit}
+      >
+        <FormControl>
+          <InputLabel htmlFor="component-simple">Name</InputLabel>
+          <Input
+            id="component-simple"
+            value={name}
+            onChange={handleChange("name")}
+            label="Name"
+          />
+        </FormControl>
 
-    if (!eventcomments) {
-      eventCommentList = "there is no Comment ";
-    } else {
-      eventCommentList = eventcomments.map((eventcomment, k) => (
-        <EventComment eventcomment={eventcomment} key={k} />
-      ));
-    }
-
-    let addModalClose = () => this.setState({ addModalshow: false });
-
-    let commentLengt =
-      eventcomments.length >= 1
-        ? eventcomments.length + "Comments"
-        : eventcomments.length + "Comment";
-    let goingAndComingwith = this.state.event.going
-      ? this.state.event.going + this.state.event.coming_with + "Person going"
-      : "0";
-    return (
-      <div className="CreateComment">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <div>{this.state.event.title}</div>
-              <div className="single-blog-item">
-                <img
-                  src={this.state.event.eventImage}
-                  alt="blog-img"
-                  style={{ width: "450px", height: "550px" }}
-                />
-                <div>{this.state.event.description}</div>
-                <div>{this.state.event.createdAt}</div>
-              </div>
-              <br></br>
-              <ButtonToolbar>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    this.updateGoing(this.state.event._id);
-                    this.setState({ addModalshow: true });
-                  }}
-                >
-                  Going
-                </Button>
-                <AddComingWithModal
-                  show={this.state.addModalshow}
-                  onHide={addModalClose}
-                  state={this.state.event._id}
-                  history={this.props.history}
-                />
-              </ButtonToolbar>
-              <div>{commentLengt}</div>
-              <div>{goingAndComingwith}</div>
-              <br></br>
-              <hr></hr>
-              <div className="list">{eventCommentList}</div>
-              <form noValidate onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    placeholder="Author"
-                    name="name"
-                    className="form-control"
-                    value={this.state.name}
-                    onChange={this.onChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <textarea
-                    type="text"
-                    placeholder="Describe this book"
-                    name="description"
-                    className="form-control"
-                    value={this.state.description}
-                    onChange={this.onChange}
-                  />
-                </div>
-                <input
-                  type="submit"
-                  className="btn btn-outline-warning btn-block mt-4"
-                />
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="component-outlined">Description</InputLabel>
+          <OutlinedInput
+            id="component-outlined"
+            value={eventDescription}
+            onChange={handleChange("description")}
+            label="Description"
+          />
+        </FormControl>
+        <input
+          type="submit"
+          className="btn btn-outline-warning btn-block mt-4"
+        />
+      </form>
+    </Grid>
+  );
 }
