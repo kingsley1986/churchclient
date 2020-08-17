@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AddComingWithModal from "../components/coming-with-modal.component";
@@ -22,7 +22,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Grid from "@material-ui/core/Grid";
 import moment from "moment";
-
+import Button from "@material-ui/core/Button";
 import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -31,12 +31,24 @@ import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 
 export default function EventAndComments(props) {
+  const EventComment = (props) => (
+    <CardContent>
+      <Typography variant="body2" color="textSecondary" component="p">
+        {props.comment.name}
+      </Typography>
+      <Typography variant="body2" color="textSecondary" component="p">
+        {props.comment.description}
+      </Typography>
+    </CardContent>
+  );
+
   const theme = useTheme();
-  const [eventComments, setTileData] = useState([]);
+  const [events, setEventData] = useState([]);
+  const [comments, setCommentData] = useState([]);
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: 850,
+      maxWidth: 550,
     },
     media: {
       height: 0,
@@ -75,14 +87,33 @@ export default function EventAndComments(props) {
           props.match.params.id +
           "/eventcomments"
       )
+
       .then((response) => {
-        setTileData(response.data);
+        setEventData(response.data);
       })
+
       .catch(function (error) {
         console.log(error);
       });
   }, []);
+  const onPageLoad = () => {
+    axios
+      .get(
+        "http://localhost:9000/events/" +
+          props.match.params.id +
+          "/eventcomments"
+      )
 
+      .then((response) => {
+        setCommentData(response.data.eventcomments);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    onPageLoad();
+  }, []);
   const nowIso = new Date();
   const getTitle = (startDateTs, endDateTs) => {
     const now = Date.parse(nowIso);
@@ -124,22 +155,32 @@ export default function EventAndComments(props) {
     }
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        "http://localhost:9000/events/" +
-          props.match.params.id +
-          "/eventcomment",
-        { name: name, description: eventDescription }
-      )
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  const onSubmit = useCallback(
+    (e) => {
+      e && e.preventDefault();
+      axios
+        .post(
+          "http://localhost:9000/events/" +
+            props.match.params.id +
+            "/eventcomment",
+          { name: name, description: eventDescription }
+        )
+
+        .then(function (response) {
+          setCommentData([]);
+          onPageLoad();
+        })
+
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    [props.match.params.id, name, eventDescription]
+  );
+
+  let eventCommentList = comments.map((comment, k) => (
+    <EventComment comment={comment} key={k} />
+  ));
 
   return (
     <Grid
@@ -159,7 +200,7 @@ export default function EventAndComments(props) {
           }}
           className={classes.cardheader}
         >
-          {eventComments.title}
+          {events.title}
         </h3>
         <CardHeader
           avatar={
@@ -173,26 +214,27 @@ export default function EventAndComments(props) {
             </IconButton>
           }
           title={getTitle(
-            Date.parse(eventComments.startingDate),
-            Date.parse(eventComments.closingDate)
+            Date.parse(events.startingDate),
+            Date.parse(events.closingDate)
           )}
           subheader={getEnded(
-            Date.parse(eventComments.startingDate),
-            Date.parse(eventComments.closingDate)
+            Date.parse(events.startingDate),
+            Date.parse(events.closingDate)
           )}
           style={{ background: "#DCDCDC" }}
         />
         <CardMedia
           className={classes.media}
-          image={eventComments.eventImage}
+          image={events.eventImage}
           title="Paella dish"
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            {eventComments.description}
+            {events.description}
           </Typography>
         </CardContent>
       </Card>
+
       <form
         className={classes.root}
         noValidate
@@ -218,11 +260,11 @@ export default function EventAndComments(props) {
             label="Description"
           />
         </FormControl>
-        <input
-          type="submit"
-          className="btn btn-outline-warning btn-block mt-4"
-        />
+        <Button type="submit" fullWidth variant="contained" color="primary">
+          Create Comment
+        </Button>
       </form>
+      <CardContent>{eventCommentList}</CardContent>
     </Grid>
   );
 }
