@@ -143,7 +143,7 @@ export default function EventAndComments(props) {
     return "Ends:" + " " + moment(startDateTs).format("LLLL");
   };
 
-  const [eventDescription, setEventComment] = React.useState("");
+  const [eventDescription, setDescription] = React.useState("");
   const [name, setName] = React.useState("");
 
   const handleChange = (parameter) => (event) => {
@@ -151,13 +151,15 @@ export default function EventAndComments(props) {
       setName(event.target.value);
     }
     if (parameter === "description") {
-      setEventComment(event.target.value);
+      setDescription(event.target.value);
     }
   };
 
   const onSubmit = useCallback(
     (e) => {
-      e && e.preventDefault();
+      e.preventDefault();
+      setName("");
+      setDescription("");
       axios
         .post(
           "http://localhost:9000/events/" +
@@ -167,7 +169,6 @@ export default function EventAndComments(props) {
         )
 
         .then(function (response) {
-          setCommentData([]);
           onPageLoad();
         })
 
