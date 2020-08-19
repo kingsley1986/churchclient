@@ -39,13 +39,16 @@ export default function EventAndComments(props) {
       <Typography variant="body2" color="textSecondary" component="p">
         {props.comment.description}
       </Typography>
+      <Typography variant="body2" color="textSecondary" component="p">
+        {props.comment.createdAt}
+      </Typography>
     </CardContent>
   );
 
   const theme = useTheme();
   const [events, setEventData] = useState([]);
   const [comments, setCommentData] = useState([]);
-
+  // const [goingEvent, setEventGoingData] = useState([]);
   const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 550,
@@ -145,6 +148,8 @@ export default function EventAndComments(props) {
 
   const [eventDescription, setDescription] = React.useState("");
   const [name, setName] = React.useState("");
+  const [going, setGoing] = React.useState("");
+  const [modalShow, setModalShow] = React.useState(false);
 
   const handleChange = (parameter) => (event) => {
     if (parameter === "name") {
@@ -178,6 +183,14 @@ export default function EventAndComments(props) {
     },
     [props.match.params.id, name, eventDescription]
   );
+
+  const updateGoing = (going) => {
+    axios
+      .get("http://localhost:9000/events/" + props.match.params.id + "/going")
+      .then((response) => {
+        setEventData(response.data);
+      });
+  };
 
   let eventCommentList = comments.map((comment, k) => (
     <EventComment comment={comment} key={k} />
@@ -235,6 +248,24 @@ export default function EventAndComments(props) {
           </Typography>
         </CardContent>
       </Card>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => {
+          updateGoing(events._id);
+          setModalShow(true);
+        }}
+      >
+        Going
+      </Button>
+
+      <AddComingWithModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        state={events._id}
+        history={props.history}
+      />
 
       <form
         className={classes.root}
