@@ -29,6 +29,10 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Box from "@material-ui/core/Box";
+import { spacing } from "@material-ui/system";
+import Paper from "@material-ui/core/Paper";
+import Button1 from "react-bootstrap/Button";
 
 export default function EventAndComments(props) {
   const EventComment = (props) => (
@@ -48,7 +52,6 @@ export default function EventAndComments(props) {
   const theme = useTheme();
   const [events, setEventData] = useState([]);
   const [comments, setCommentData] = useState([]);
-  // const [goingEvent, setEventGoingData] = useState([]);
   const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 550,
@@ -196,6 +199,15 @@ export default function EventAndComments(props) {
     <EventComment comment={comment} key={k} />
   ));
 
+  let commentLengt =
+    comments.length > 1
+      ? comments.length + " " + "Comments"
+      : comments.length + " " + "Comment";
+  let goingAndComingwith =
+    events.going + events.coming_with <= 1
+      ? events.going + events.coming_with + " " + "Person Coming"
+      : events.going + events.coming_with + " " + "People are Coming";
+
   return (
     <Grid
       container
@@ -249,16 +261,28 @@ export default function EventAndComments(props) {
         </CardContent>
       </Card>
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          updateGoing(events._id);
-          setModalShow(true);
-        }}
-      >
-        Going
-      </Button>
+      <>
+        <div>
+          <Button1 variant="primary" size="sm">
+            {commentLengt}
+          </Button1>{" "}
+          <Button1 style={{ margin: "5px" }} variant="secondary" size="sm">
+            {goingAndComingwith}
+          </Button1>
+          <Button1
+            variant="primary"
+            size="sm"
+            color="primary"
+            onClick={() => {
+              updateGoing(events._id);
+              setModalShow(true);
+            }}
+          >
+            Are you Coming? Click Here!
+          </Button1>{" "}
+        </div>
+      </>
+      <br></br>
 
       <AddComingWithModal
         show={modalShow}
@@ -290,6 +314,7 @@ export default function EventAndComments(props) {
             value={eventDescription}
             onChange={handleChange("description")}
             label="Description"
+            style={{ width: "42vw" }}
           />
         </FormControl>
         <Button type="submit" fullWidth variant="contained" color="primary">
