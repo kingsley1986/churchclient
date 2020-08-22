@@ -37,7 +37,9 @@ export default function AddComingWithModal(props) {
     e.preventDefault();
     axios
       .post(
-        " https://cef378ac4e5b.ngrok.io/events/" + props.state + "/coming_with",
+        "https://cryptic-shelf-72177.herokuapp.com/events/" +
+          props.state +
+          "/coming_with",
         {
           coming_with: evetCominwith,
         }
