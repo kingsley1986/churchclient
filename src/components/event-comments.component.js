@@ -263,14 +263,18 @@ export default function EventAndComments(props) {
 
       <>
         <div>
-          <Button1 variant="primary" size="sm">
+          <Button1 variant="outline-primary" size="sm">
             {commentLengt}
           </Button1>{" "}
-          <Button1 style={{ margin: "5px" }} variant="secondary" size="sm">
+          <Button1
+            style={{ margin: "5px" }}
+            variant="outline-success"
+            size="sm"
+          >
             {goingAndComingwith}
           </Button1>
           <Button1
-            variant="primary"
+            variant="success"
             size="sm"
             color="primary"
             onClick={() => {

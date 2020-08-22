@@ -53,7 +53,7 @@ export default function EventsList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:9000/events")
+      .get("https://cef378ac4e5b.ngrok.io/events")
       .then((response) => {
         setTileData([...response.data]);
       })
