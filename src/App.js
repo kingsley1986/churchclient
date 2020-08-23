@@ -7,6 +7,8 @@ import PostAndComments from "./components/post-comments.component";
 import EventsList from "./components/events-list.component";
 import EventAndComments from "./components/event-comments.component";
 import GalleryList from "./components/galleries-list";
+import Program from "./components/programs";
+import ProgramComments from "./components/program-comments";
 
 class App extends Component {
   render() {
@@ -39,9 +41,9 @@ class App extends Component {
                   </Link>
                 </li>
                 <li className="navbar-item">
-                  <Link to="/create" className="nav-link">
+                  <Link to="/programs" className="nav-link">
                     {" "}
-                    Create Todo
+                    programs
                   </Link>
                 </li>
               </ul>
@@ -49,8 +51,14 @@ class App extends Component {
           </nav>
           <Route path="/posts" exact component={PostsList} />
           <Route path="/events" exact component={EventsList} />
+          <Route path="/programs" exact component={Program} />
           <Route path="/galleries" exact component={GalleryList} />
           <Route path="/posts/:id/comments" exact component={PostAndComments} />
+          <Route
+            path="/programs/:id/programcomments"
+            exact
+            component={ProgramComments}
+          />
           <Route
             path="/events/:id/eventcomments"
             exact

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import AddComingWithModal from "../components/coming-with-modal.component";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -34,8 +33,8 @@ import { spacing } from "@material-ui/system";
 import Paper from "@material-ui/core/Paper";
 import Button1 from "react-bootstrap/Button";
 
-export default function EventAndComments(props) {
-  const EventComment = (props) => (
+export default function ProgramCommentsAndImages(props) {
+  const ProgramComment = (props) => (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container wrap="nowrap" spacing={2}>
@@ -53,8 +52,9 @@ export default function EventAndComments(props) {
   );
 
   const theme = useTheme();
-  const [events, setEventData] = useState([]);
+  const [program, setProgramData] = useState([]);
   const [comments, setCommentData] = useState([]);
+  const [images, setImageData] = useState([]);
   const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 550,
@@ -92,13 +92,13 @@ export default function EventAndComments(props) {
   useEffect(() => {
     axios
       .get(
-        "https://cryptic-shelf-72177.herokuapp.com/events/" +
+        "http://localhost:9000/programs/" +
           props.match.params.id +
-          "/eventcomments"
+          "/programcomments"
       )
 
       .then((response) => {
-        setEventData(response.data);
+        setProgramData(response.data);
       })
 
       .catch(function (error) {
@@ -108,13 +108,13 @@ export default function EventAndComments(props) {
   const onPageLoad = () => {
     axios
       .get(
-        "https://cryptic-shelf-72177.herokuapp.com/events/" +
+        "http://localhost:9000/programs/" +
           props.match.params.id +
-          "/eventcomments"
+          "/programcomments"
       )
 
       .then((response) => {
-        setCommentData(response.data.eventcomments);
+        setCommentData(response.data.programcomments);
       })
       .catch(function (error) {
         console.log(error);
@@ -123,39 +123,9 @@ export default function EventAndComments(props) {
   useEffect(() => {
     onPageLoad();
   }, []);
-  const nowIso = new Date();
-  const getTitle = (startDateTs, endDateTs) => {
-    const now = Date.parse(nowIso);
-
-    if (endDateTs <= now) {
-      return "Started:" + " " + moment(startDateTs).format("LLLL");
-    }
-
-    if (startDateTs < now && endDateTs > now) {
-      return "Live:" + " " + moment(startDateTs).format("LLLL");
-    }
-
-    return "Starting:" + " " + moment(startDateTs).format("LLLL");
-  };
-
-  const getEnded = (startDateTs, endDateTs) => {
-    const now = Date.parse(nowIso);
-
-    if (endDateTs <= now) {
-      return "Ended:" + " " + moment(startDateTs).format("LLLL");
-    }
-
-    if (startDateTs < now && endDateTs > now) {
-      return "Will End:" + " " + moment(startDateTs).format("LLLL");
-    }
-
-    return "Ends:" + " " + moment(startDateTs).format("LLLL");
-  };
 
   const [eventDescription, setDescription] = React.useState("");
   const [name, setName] = React.useState("");
-  const [going, setGoing] = React.useState("");
-  const [modalShow, setModalShow] = React.useState(false);
 
   const handleChange = (parameter) => (event) => {
     if (parameter === "name") {
@@ -173,9 +143,9 @@ export default function EventAndComments(props) {
       setDescription("");
       axios
         .post(
-          "https://cryptic-shelf-72177.herokuapp.com/events/" +
+          "http://localhost:9000/comments/" +
             props.match.params.id +
-            "/eventcomment",
+            "/programcomment",
           { name: name, description: eventDescription }
         )
 
@@ -189,31 +159,15 @@ export default function EventAndComments(props) {
     },
     [props.match.params.id, name, eventDescription]
   );
-
-  const updateGoing = (going) => {
-    axios
-      .get(
-        "https://cryptic-shelf-72177.herokuapp.com/events/" +
-          props.match.params.id +
-          "/going"
-      )
-      .then((response) => {
-        setEventData(response.data);
-      });
-  };
-
-  let eventCommentList = comments.map((comment, k) => (
-    <EventComment comment={comment} key={k} />
+  console.log(program);
+  let programCommentList = comments.map((comment, k) => (
+    <ProgramComment comment={comment} key={k} />
   ));
 
   let commentLengt =
     comments.length > 1
       ? comments.length + " " + "Comments"
       : comments.length + " " + "Comment";
-  let goingAndComingwith =
-    events.going + events.coming_with <= 1
-      ? events.going + events.coming_with + " " + "Person Coming"
-      : events.going + events.coming_with + " " + "People are Coming";
 
   return (
     <Grid
@@ -233,7 +187,7 @@ export default function EventAndComments(props) {
           }}
           className={classes.cardheader}
         >
-          {events.title}
+          {program.title}
         </h3>
         <CardHeader
           avatar={
@@ -246,24 +200,16 @@ export default function EventAndComments(props) {
               <MoreVertIcon />
             </IconButton>
           }
-          title={getTitle(
-            Date.parse(events.startingDate),
-            Date.parse(events.closingDate)
-          )}
-          subheader={getEnded(
-            Date.parse(events.startingDate),
-            Date.parse(events.closingDate)
-          )}
           style={{ background: "#DCDCDC" }}
         />
         <CardMedia
           className={classes.media}
-          image={events.eventImage}
+          image={program.programImage}
           title="Paella dish"
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            {events.description}
+            {program.description}
           </Typography>
         </CardContent>
       </Card>
@@ -273,34 +219,9 @@ export default function EventAndComments(props) {
           <Button1 variant="outline-primary" size="sm">
             {commentLengt}
           </Button1>{" "}
-          <Button1
-            style={{ margin: "5px" }}
-            variant="outline-success"
-            size="sm"
-          >
-            {goingAndComingwith}
-          </Button1>
-          <Button1
-            variant="success"
-            size="sm"
-            color="primary"
-            onClick={() => {
-              updateGoing(events._id);
-              setModalShow(true);
-            }}
-          >
-            Are you Coming? Click Here!
-          </Button1>{" "}
         </div>
       </>
       <br></br>
-
-      <AddComingWithModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        state={events._id}
-        history={props.history}
-      />
 
       <form
         className={classes.root}
@@ -332,7 +253,7 @@ export default function EventAndComments(props) {
           Create Comment
         </Button>
       </form>
-      <CardContent>{eventCommentList}</CardContent>
+      <CardContent>{programCommentList}</CardContent>
     </Grid>
   );
 }
