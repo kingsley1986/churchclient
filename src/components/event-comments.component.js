@@ -104,7 +104,7 @@ export default function EventAndComments(props) {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [events]);
   const onPageLoad = () => {
     axios
       .get(
