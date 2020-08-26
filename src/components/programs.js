@@ -8,44 +8,35 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import { Link } from "react-router-dom";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: theme.palette.background.paper,
-  },
-  gridList: {
-    width: 900,
-  },
-  icon: {
-    color: "rgba(255, 255, 255, 0.54)",
-  },
-}));
-
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const tileData = [
- *   {
- *     img: image,
- *     title: 'Image',
- *     author: 'author',
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- */
-export default function TitlebarGridList() {
-  const classes = useStyles();
+export default function Program() {
+  const theme = useTheme();
   const [programData, setProgramData] = useState([]);
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-around",
+      overflow: "hidden",
+      backgroundColor: theme.palette.background.paper,
+    },
+    gridList: {
+      width: 1100,
+    },
+    icon: {
+      color: "rgba(255, 255, 255, 0.54)",
+    },
+    image: {
+      height: "68%",
+      width: "530px",
+      objectFit: "cover",
+      paddingBottom: 10,
+    },
+  }));
   useEffect(() => {
     axios
       .get("http://localhost:9000/programs")
@@ -57,33 +48,40 @@ export default function TitlebarGridList() {
       });
   }, []);
 
+  const matches = useMediaQuery(theme.breakpoints.down("xs"));
+  const classes = useStyles();
+
   return (
     <div className={classes.root}>
-      <GridList cellHeight={380} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
-          <ListSubheader component="div">December</ListSubheader>
-        </GridListTile>
-        {programData.map((tile) => (
-          <GridListTile
-            key={tile.programImage}
-            component={Link}
-            to={"/programs/" + tile._id + "/programcomments"}
-          >
-            <img src={tile.programImage} alt={tile.title} />
-            <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
-              actionIcon={
-                <IconButton
-                  aria-label={`info about ${tile.title}`}
-                  className={classes.icon}
-                >
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        ))}
+      <GridListTile key="Subheader" style={{ height: "auto" }}></GridListTile>
+      <GridList
+        cellHeight={600}
+        cols={matches ? 1 : 3}
+        className={classes.gridList}
+        spacing={8}
+      >
+        {programData.length > 0 &&
+          programData.map((tile, index) => {
+            return (
+              <GridListTile
+                key={Math.floor(Math.random() * new Date().getTime())}
+              >
+                <img
+                  src={tile.programImage}
+                  alt={tile.title}
+                  class={classes.image}
+                />
+                <GridListTileBar titlePosition="top" title={tile.title} />
+                <Typography paragraph style={{ borderStyle: "ridge" }}>
+                  set aside, leaving chicken and chorizo in the pan. Add
+                  pimentón, bay leaves, garlic, tomatoes, onion, salt and
+                  pepper, and cook, stirring often until thickened and fragrant,
+                  about 10 minutes. Add saffron broth and remaining 4 1/2 cups
+                  chicken broth; bring to a boil.
+                </Typography>
+              </GridListTile>
+            );
+          })}
       </GridList>
     </div>
   );
