@@ -31,10 +31,10 @@ export default function Program() {
       color: "rgba(255, 255, 255, 0.54)",
     },
     image: {
-      height: "68%",
+      height: "72%",
       width: "530px",
       objectFit: "cover",
-      paddingBottom: 10,
+      paddingBottom: 3,
     },
   }));
   useEffect(() => {
@@ -59,6 +59,7 @@ export default function Program() {
         cols={matches ? 1 : 3}
         className={classes.gridList}
         spacing={8}
+        style={{ background: "#ff1493" }}
       >
         {programData.length > 0 &&
           programData.map((tile, index) => {
@@ -71,8 +72,18 @@ export default function Program() {
                   alt={tile.title}
                   class={classes.image}
                 />
-                <GridListTileBar titlePosition="top" title={tile.title} />
-                <Typography paragraph style={{ borderStyle: "ridge" }}>
+                <GridListTileBar
+                  titlePosition="top"
+                  title={tile.title}
+                  // style={{ height: 430 }}
+                />
+                <Typography
+                  paragraph
+                  style={{
+                    borderBottom: "2px solid",
+                    background: "white",
+                  }}
+                >
                   set aside, leaving chicken and chorizo in the pan. Add
                   pimentón, bay leaves, garlic, tomatoes, onion, salt and
                   pepper, and cook, stirring often until thickened and fragrant,
