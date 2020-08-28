@@ -55,17 +55,20 @@ export default function Program() {
     <div className={classes.root}>
       <GridListTile key="Subheader" style={{ height: "auto" }}></GridListTile>
       <GridList
-        cellHeight={600}
+        cellHeight={550}
         cols={matches ? 1 : 3}
         className={classes.gridList}
         spacing={8}
-        style={{ background: "#ff1493" }}
+        style={{ background: "#A52A2A		" }}
       >
         {programData.length > 0 &&
           programData.map((tile, index) => {
             return (
               <GridListTile
                 key={Math.floor(Math.random() * new Date().getTime())}
+                component={Link}
+                to={"/programs/" + tile._id + "/programcomments"}
+                style={{ textDecoration: "none", color: "black" }}
               >
                 <img
                   src={tile.programImage}
@@ -75,20 +78,18 @@ export default function Program() {
                 <GridListTileBar
                   titlePosition="top"
                   title={tile.title}
-                  // style={{ height: 430 }}
+                  // style={{ height: 400 }}
                 />
+
                 <Typography
                   paragraph
                   style={{
                     borderBottom: "2px solid",
                     background: "white",
+                    padding: 7,
                   }}
                 >
-                  set aside, leaving chicken and chorizo in the pan. Add
-                  pimentón, bay leaves, garlic, tomatoes, onion, salt and
-                  pepper, and cook, stirring often until thickened and fragrant,
-                  about 10 minutes. Add saffron broth and remaining 4 1/2 cups
-                  chicken broth; bring to a boil.
+                  {tile.description.substring(0, 222)}..
                 </Typography>
               </GridListTile>
             );

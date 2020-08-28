@@ -28,3 +28,12 @@
   font-size: 15px;
   font-weight: bolder;
 }
+
+.MuiGridListTileBar-title {
+  font-size: 1.7em !important;
+}
+/* 
+.MuiGridListTile-root {
+  width: 100%;
+  overflow: visible;
+} */
