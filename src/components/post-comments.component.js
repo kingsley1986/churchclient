@@ -1,18 +1,50 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardHeader,
+  MDBCardFooter,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBMask,
+  MDBIcon,
+  MDBView,
+  MDBBtn,
+} from "mdbreact";
 
 const PostComment = (props) => (
-  <div>
-    <div className="blog-content">
-      <p>{props.comment.description}</p>
-      <p>{props.comment.name}</p>
-      <a href="" className="more-btn">
-        View More
-      </a>
-    </div>
-    <span className="blog-date">{props.comment.createdAt}</span>
-  </div>
+  <MDBCard style={{ width: "auto", marginTop: "1rem" }} className="text-center">
+    <MDBCardHeader
+      style={{
+        backgroundColor: "#00c851",
+        color: "white",
+        textAlign: "center",
+        fontWeight: "bolder",
+      }}
+    >
+      Thank you for commenting. God bless you
+    </MDBCardHeader>
+    <MDBCardBody>
+      <MDBCardTitle>{props.comment.name}</MDBCardTitle>
+      <MDBCardText>{props.comment.description}</MDBCardText>
+    </MDBCardBody>
+    <MDBCardFooter
+      style={{
+        backgroundColor: "#4285f4",
+        color: "white",
+        textAlign: "center",
+        fontWeight: "bold",
+      }}
+    >
+      {moment(props.comment.createdAt).format("LLLL")}
+    </MDBCardFooter>
+  </MDBCard>
 );
 
 export default class PostAndComments extends Component {
@@ -103,54 +135,93 @@ export default class PostAndComments extends Component {
     }
 
     return (
-      <div className="CreateComment">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <div>{this.state.post.title}</div>
-              <div className="single-blog-item">
+      <MDBCard className="my-5 px-5 pb-5">
+        <MDBCardBody>
+          <h2 className="h1-responsive font-weight-bold text-center my-5">
+            Recent posts
+          </h2>
+          <p className="text-center w-responsive mx-auto mb-5">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+          <MDBRow>
+            <MDBCol lg="8">
+              <MDBView className="rounded z-depth-2 mb-lg-0 mb-4" hover waves>
                 <img
+                  className="img-fluid"
                   src={this.state.post.postImage}
-                  alt="blog-img"
-                  style={{ width: "450px", height: "550px" }}
+                  alt=""
                 />
-                <div>{this.state.post.description}</div>
-                <div>{this.state.post.from}</div>
-                <div>{this.state.post.createdAt}</div>
-              </div>
-              <div>{comments.length} Comments</div>
-              <div className="list">{commentList}</div>
-              <form noValidate onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    placeholder="Author"
-                    name="name"
-                    className="form-control"
-                    value={this.state.name}
-                    onChange={this.onChange}
-                  />
-                </div>
+                <a href="#!">
+                  <MDBMask overlay="white-slight" />
+                </a>
+              </MDBView>
+            </MDBCol>
+            <MDBCol lg="7">
+              <a href="#!" className="green-text">
+                <h6 className="font-weight-bold mb-3">
+                  <MDBIcon icon="utensils" className="pr-2" />
+                  Food
+                </h6>
+              </a>
+              <h3 className="font-weight-bold mb-3 p-0">
+                <strong>{this.state.post.title}</strong>
+              </h3>
+              <p>{this.state.post.description}</p>
+              <p>
+                by
+                <a href="#!">
+                  <strong>Carine Fox</strong>
+                </a>
+                , 19/08/2018
+              </p>
+              <MDBBtn color="success" size="md" className="waves-light ">
+                <div>{comments.length} Comments</div>
+              </MDBBtn>
+            </MDBCol>
+          </MDBRow>
+          <hr className="my-5" />
+        </MDBCardBody>
+        <MDBContainer>{commentList}</MDBContainer>
 
-                <div className="form-group">
-                  <input
-                    type="text"
-                    placeholder="Describe this book"
-                    name="description"
-                    className="form-control"
-                    value={this.state.description}
-                    onChange={this.onChange}
-                  />
-                </div>
-                <input
-                  type="submit"
-                  className="btn btn-outline-warning btn-block mt-4"
-                />
-              </form>
-            </div>
+        <form noValidate onSubmit={this.onSubmit}>
+          <div className="form-group">
+            <input
+              type="text"
+              placeholder="Author"
+              name="name"
+              className="form-control"
+              value={this.state.name}
+              onChange={this.onChange}
+            />
           </div>
-        </div>
-      </div>
+
+          <div className="input-group">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="basic-addon">
+                <i className="fas fa-pencil-alt prefix"></i>
+              </span>
+            </div>
+
+            <textarea
+              className="form-control"
+              id="exampleFormControlTextarea1"
+              rows="5"
+              placeholder="Write your Comments here"
+              name="description"
+              value={this.state.description}
+              onChange={this.onChange}
+            ></textarea>
+          </div>
+
+          <input
+            type="submit"
+            className="btn btn-outline-warning btn-block mt-4"
+          />
+        </form>
+      </MDBCard>
     );
   }
 }
