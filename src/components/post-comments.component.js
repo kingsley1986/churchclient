@@ -74,7 +74,7 @@ export default class PostAndComments extends Component {
   componentDidMount() {
     axios
       .get(
-        "https://cryptic-shelf-72177.herokuapp.com/:9000/posts/" +
+        "https://cryptic-shelf-72177.herokuapp.com/posts/" +
           this.props.match.params.id +
           "/comments"
       )
@@ -101,7 +101,7 @@ export default class PostAndComments extends Component {
 
     axios
       .post(
-        "https://cryptic-shelf-72177.herokuapp.com/:9000/posts/" +
+        "https://cryptic-shelf-72177.herokuapp.com/posts/" +
           this.props.match.params.id +
           "/comment",
         data
@@ -118,7 +118,7 @@ export default class PostAndComments extends Component {
 
         axios
           .get(
-            "https://cryptic-shelf-72177.herokuapp.com/:9000/posts/" +
+            "https://cryptic-shelf-72177.herokuapp.com/posts/" +
               this.props.match.params.id +
               "/comments"
           )
