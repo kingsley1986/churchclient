@@ -20,26 +20,39 @@ import {
 
 const PostComment = (props) => (
   <MDBCard style={{ width: "auto", marginTop: "1rem" }} className="text-center">
-    <MDBCardHeader
+    {/* <MDBCardHeader
       style={{
         backgroundColor: "#00c851",
         color: "white",
-        textAlign: "center",
         fontWeight: "bolder",
+
+        fontFamily: "Gabriela",
+        color: "#FFF",
+        margin: "auto",
+        textAlign: "center",
+        fontSize: "1.2em",
+        display: "tableCell",
+        padding: "0 0.5em",
       }}
     >
       Thank you for commenting. God bless you
-    </MDBCardHeader>
+    </MDBCardHeader> */}
     <MDBCardBody>
+      <MDBCardText style={{ textAlign: "justify", textJustify: "inter-word" }}>
+        {props.comment.description}
+      </MDBCardText>
       <MDBCardTitle>{props.comment.name}</MDBCardTitle>
-      <MDBCardText>{props.comment.description}</MDBCardText>
     </MDBCardBody>
     <MDBCardFooter
       style={{
-        backgroundColor: "#4285f4",
-        color: "white",
+        fontFamily: "Gabriela",
+        color: "#FFF",
+        margin: "auto",
         textAlign: "center",
-        fontWeight: "bold",
+        fontSize: "1.2em",
+        backgroundColor: "#00c851",
+        display: "tableCell",
+        padding: "0 0.5em",
       }}
     >
       {moment(props.comment.createdAt).format("LLLL")}
@@ -61,7 +74,7 @@ export default class PostAndComments extends Component {
   componentDidMount() {
     axios
       .get(
-        "https://cryptic-shelf-72177.herokuapp.com/posts/" +
+        "https://cryptic-shelf-72177.herokuapp.com/:9000/posts/" +
           this.props.match.params.id +
           "/comments"
       )
@@ -88,7 +101,7 @@ export default class PostAndComments extends Component {
 
     axios
       .post(
-        "https://cryptic-shelf-72177.herokuapp.com/posts/" +
+        "https://cryptic-shelf-72177.herokuapp.com/:9000/posts/" +
           this.props.match.params.id +
           "/comment",
         data
@@ -105,7 +118,7 @@ export default class PostAndComments extends Component {
 
         axios
           .get(
-            "https://cryptic-shelf-72177.herokuapp.com/posts/" +
+            "https://cryptic-shelf-72177.herokuapp.com/:9000/posts/" +
               this.props.match.params.id +
               "/comments"
           )
@@ -135,57 +148,52 @@ export default class PostAndComments extends Component {
     }
 
     return (
-      <MDBCard className="my-5 px-5 pb-5">
-        <MDBCardBody>
-          <h2 className="h1-responsive font-weight-bold text-center my-5">
-            Recent posts
-          </h2>
-          <p className="text-center w-responsive mx-auto mb-5">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </p>
-          <MDBRow>
-            <MDBCol lg="8">
-              <MDBView className="rounded z-depth-2 mb-lg-0 mb-4" hover waves>
-                <img
-                  className="img-fluid"
-                  src={this.state.post.postImage}
-                  alt=""
-                />
-                <a href="#!">
-                  <MDBMask overlay="white-slight" />
-                </a>
-              </MDBView>
-            </MDBCol>
-            <MDBCol lg="7">
-              <a href="#!" className="green-text">
+      <div>
+        <MDBCard className="my-5  override">
+          <MDBCardBody>
+            <MDBRow className="d-flex justify-content-center">
+              <MDBCol lg="10">
+                <MDBView className="rounded z-depth-2 mb-lg-0 mb-4" hover waves>
+                  <img
+                    className="img-fluid"
+                    src={this.state.post.postImage}
+                    alt=""
+                  />
+                  <a href="#!">
+                    <MDBMask overlay="white-slight" />
+                  </a>
+                </MDBView>
+              </MDBCol>
+              <MDBCol lg="10">
+                {/* <a href="#!" className="green-text">
                 <h6 className="font-weight-bold mb-3">
                   <MDBIcon icon="utensils" className="pr-2" />
                   Food
                 </h6>
-              </a>
-              <h3 className="font-weight-bold mb-3 p-0">
-                <strong>{this.state.post.title}</strong>
-              </h3>
-              <p>{this.state.post.description}</p>
-              <p>
-                by
-                <a href="#!">
-                  <strong>Carine Fox</strong>
-                </a>
-                , 19/08/2018
-              </p>
-              <MDBBtn color="success" size="md" className="waves-light ">
-                <div>{comments.length} Comments</div>
-              </MDBBtn>
-            </MDBCol>
-          </MDBRow>
-          <hr className="my-5" />
-        </MDBCardBody>
-        <MDBContainer>{commentList}</MDBContainer>
-
+              </a> */}
+                <h3 className="font-weight-bold mb-3 p-0 d-flex justify-content-center">
+                  <strong>{this.state.post.title}</strong>
+                </h3>
+                <p style={{ textAlign: "justify", textJustify: "inter-word" }}>
+                  {this.state.post.description}
+                </p>
+                <p className="d-flex justify-content-center">
+                  by
+                  <a href="#!">
+                    <strong>Carine Fox</strong>
+                  </a>
+                  , 19/08/2018
+                </p>
+                <MDBBtn color="success" size="md" className="waves-light  ">
+                  <div style={{ textAlign: "center" }}>
+                    {comments.length} Comments
+                  </div>
+                </MDBBtn>
+              </MDBCol>
+            </MDBRow>
+            <hr className="my-5" />
+          </MDBCardBody>
+        </MDBCard>
         <form noValidate onSubmit={this.onSubmit}>
           <div className="form-group">
             <input
@@ -221,7 +229,9 @@ export default class PostAndComments extends Component {
             className="btn btn-outline-warning btn-block mt-4"
           />
         </form>
-      </MDBCard>
+
+        <MDBContainer>{commentList}</MDBContainer>
+      </div>
     );
   }
 }

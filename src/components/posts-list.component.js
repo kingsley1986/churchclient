@@ -52,7 +52,10 @@ export default function Post() {
         <a href="#!" className="font-weight-bold"></a>{" "}
         {moment(props.post.createdAt).format("llll")}
       </p>
-      <p className="dark-grey-text">
+      <p
+        className="dark-grey-text"
+        style={{ textAlign: "justify", textJustify: "inter-word" }}
+      >
         {props.post.description.substring(0, 200)}
       </p>
       <MDBBtn color="pink" rounded size="md">
@@ -77,7 +80,7 @@ export default function Post() {
 
   useEffect(() => {
     axios
-      .get("http://cryptic-shelf-72177.herokuapp.com/posts")
+      .get("https://cryptic-shelf-72177.herokuapp.com//posts")
       .then((response) => {
         setPostData([...response.data]);
       })

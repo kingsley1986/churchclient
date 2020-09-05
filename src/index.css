@@ -33,7 +33,12 @@
   font-size: 1.7em !important;
 }
 
-/* .MuiGridListTile-root {
-  width: 100%;
-  overflow: visible;
-} */
+.card-body {
+  padding: 0px !important;
+}
+
+.text-center {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  /* width: 60% !important; */
+}
