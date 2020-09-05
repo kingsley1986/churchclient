@@ -94,7 +94,7 @@ export default function Post() {
   ));
 
   return (
-    <MDBCard className="my-5 px-5 pb-5">
+    <MDBCard className="my-5 pb-5">
       <MDBCardBody className="text-center">
         <h2 className="h1-responsive font-weight-bold text-center my-5">
           Recent posts
