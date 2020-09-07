@@ -42,3 +42,16 @@
   padding-right: 5px !important;
   /* width: 60% !important; */
 }
+
+@media screen and (max-width: 992px) {
+  .ant-card-cover img {
+    width: 100% !important;
+  }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  .ant-card-cover img {
+    width: 100% !important;
+  }
+}

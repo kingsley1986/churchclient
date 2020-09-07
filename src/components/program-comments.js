@@ -4,13 +4,13 @@ import axios from "axios";
 import AddComingWithModal from "../components/coming-with-modal.component";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import Card from "@material-ui/core/Card";
+// import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
+// import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
@@ -39,22 +39,28 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import InfoIcon from "@material-ui/icons/Info";
+import { Card, Avatar } from "antd";
+import "antd/dist/antd.css";
+
+import {
+  EditOutlined,
+  EllipsisOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 
 export default function EventAndComments(props) {
   const EventComment = (props) => (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-            <Avatar>W</Avatar>
-          </Grid>
-          <Grid item xs>
-            <Typography>{props.comment.name}</Typography>
-            <Typography>{props.comment.description}</Typography>
-            <Typography>{props.comment.createdAt}</Typography>
-          </Grid>
+      <Grid container wrap="nowrap" spacing={2}>
+        <Grid item>
+          <Avatar>W</Avatar>
         </Grid>
-      </Paper>
+        <Grid item xs>
+          <Typography>{props.comment.name}</Typography>
+          <Typography>{props.comment.description}</Typography>
+          <Typography>{props.comment.createdAt}</Typography>
+        </Grid>
+      </Grid>
     </div>
   );
 
@@ -183,102 +189,102 @@ export default function EventAndComments(props) {
       ? comments.length + " " + "Comments"
       : comments.length + " " + "Comment";
 
+  const { Meta } = Card;
+
   return (
-    <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
-          <ListSubheader component="div">December</ListSubheader>
-        </GridListTile>
-
-        <GridListTile>
-          <img src={programs.programImage} alt={programs.title} />
-          <GridListTileBar
-            title={programs.title}
-            subtitle={<span>by: {programs.author}</span>}
-            actionIcon={
-              <IconButton
-                aria-label={`info about ${programs.title}`}
-                className={classes.icon}
-              >
-                <InfoIcon />
-              </IconButton>
-            }
-          />
-        </GridListTile>
-      </GridList>
-    </div>
-    // <Grid
-    //   container
-    //   spacing={0}
-    //   direction="column"
-    //   alignItems="center"
-    //   justify="center"
-    //   style={{ minHeight: "100vh" }}
-    // >
-    //   <Card className={classes.root}>
-    //     <h3
-    //       style={{
-    //         background: "	#800000",
-    //         color: "white",
-    //         textAlign: "center",
-    //       }}
-    //       className={classes.cardheader}
-    //     >
-    //       {programs.title}
-    //     </h3>
-
-    //     <CardMedia
-    //       className={classes.media}
-    //       image={programs.programImage}
-    //       title="Paella dish"
-    //     />
-    //     <CardContent>
-    //       <Typography variant="body2" color="textSecondary" component="p">
-    //         {programs.description}
-    //       </Typography>
-    //     </CardContent>
-    //   </Card>
-
-    //   <>
-    //     <div>
-    //       <Button1 variant="outline-primary" size="sm">
-    //         {commentLengt}
-    //       </Button1>{" "}
-    //     </div>
-    //   </>
-    //   <br></br>
-
-    //   <form
-    //     className={classes.root}
-    //     noValidate
-    //     autoComplete="off"
-    //     onSubmit={onSubmit}
-    //   >
-    //     <FormControl>
-    //       <InputLabel htmlFor="component-simple">Name</InputLabel>
-    //       <Input
-    //         id="component-simple"
-    //         value={name}
-    //         onChange={handleChange("name")}
-    //         label="Name"
-    //       />
-    //     </FormControl>
-
-    //     <FormControl variant="outlined">
-    //       <InputLabel htmlFor="component-outlined">Description</InputLabel>
-    //       <OutlinedInput
-    //         id="component-outlined"
-    //         value={eventDescription}
-    //         onChange={handleChange("description")}
-    //         label="Description"
-    //         style={{ width: "42vw" }}
-    //       />
-    //     </FormControl>
-    //     <Button type="submit" fullWidth variant="contained" color="primary">
-    //       Create Comment
-    //     </Button>
-    //   </form>
-    //   <CardContent>{eventCommentList}</CardContent>
-    // </Grid>
+    <Card
+      type="flex"
+      justify="center"
+      align="middle"
+      cover={
+        <img
+          alt="example"
+          style={{
+            height: "auto",
+            width: "auto",
+            maxWidth: "1000px",
+            maxHeight: "1000px",
+          }}
+          src={programs.programImage}
+        />
+      }
+    >
+      <Meta title={programs.title} description={programs.description} />
+      <br></br>
+      <Paper className={classes.paper}>{eventCommentList}</Paper>
+    </Card>
   );
+  // <Grid
+  //   container
+  //   spacing={0}
+  //   direction="column"
+  //   alignItems="center"
+  //   justify="center"
+  //   style={{ minHeight: "100vh" }}
+  // >
+  //   <Card className={classes.root}>
+  //     <h3
+  //       style={{
+  //         background: "	#800000",
+  //         color: "white",
+  //         textAlign: "center",
+  //       }}
+  //       className={classes.cardheader}
+  //     >
+  //       {programs.title}
+  //     </h3>
+
+  //     <CardMedia
+  //       className={classes.media}
+  //       image={programs.programImage}
+  //       title="Paella dish"
+  //     />
+  //     <CardContent>
+  //       <Typography variant="body2" color="textSecondary" component="p">
+  //         {programs.description}
+  //       </Typography>
+  //     </CardContent>
+  //   </Card>
+
+  //   <>
+  //     <div>
+  //       <Button1 variant="outline-primary" size="sm">
+  //         {commentLengt}
+  //       </Button1>{" "}
+  //     </div>
+  //   </>
+  //   <br></br>
+
+  //   <form
+  //     className={classes.root}
+  //     noValidate
+  //     autoComplete="off"
+  //     onSubmit={onSubmit}
+  //   >
+  //     <FormControl>
+  //       <InputLabel htmlFor="component-simple">Name</InputLabel>
+  //       <Input
+  //         id="component-simple"
+  //         value={name}
+  //         onChange={handleChange("name")}
+  //         label="Name"
+  //       />
+  //     </FormControl>
+
+  //     <FormControl variant="outlined">
+  //       <InputLabel htmlFor="component-outlined">Description</InputLabel>
+  //       <OutlinedInput
+  //         id="component-outlined"
+  //         value={eventDescription}
+  //         onChange={handleChange("description")}
+  //         label="Description"
+  //         style={{ width: "42vw" }}
+  //       />
+  //     </FormControl>
+  //     <Button type="submit" fullWidth variant="contained" color="primary">
+  //       Create Comment
+  //     </Button>
+  //   </form>
+  //   <CardContent>{eventCommentList}</CardContent>
+  // </Grid>
 }
