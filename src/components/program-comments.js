@@ -4,13 +4,13 @@ import axios from "axios";
 import AddComingWithModal from "../components/coming-with-modal.component";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-// import Card from "@material-ui/core/Card";
+import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
-// import Avatar from "@material-ui/core/Avatar";
+import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
@@ -39,28 +39,37 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import InfoIcon from "@material-ui/icons/Info";
-import { Card, Avatar } from "antd";
-import "antd/dist/antd.css";
-
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 export default function EventAndComments(props) {
   const EventComment = (props) => (
-    <div className={classes.root}>
-      <Grid container wrap="nowrap" spacing={2}>
-        <Grid item>
-          <Avatar>W</Avatar>
-        </Grid>
-        <Grid item xs>
-          <Typography>{props.comment.name}</Typography>
-          <Typography>{props.comment.description}</Typography>
-          <Typography>{props.comment.createdAt}</Typography>
-        </Grid>
-      </Grid>
+    <div className="comment-container theme--light">
+      <div className="comments">
+        <div>
+          <div className="card v-card v-sheet theme--light elevation-2">
+            <div className="header">
+              <div
+                className="v-avatar avatar"
+                style={{ height: "50px", width: "50px" }}
+              >
+                <img src="https://images.unsplash.com/photo-1490894641324-cfac2f5cd077?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=100&q=70" />
+              </div>
+              <span className="displayName title">{props.comment.name}</span>{" "}
+              <span className="displayName caption">
+                {moment(props.comment.createdAt).format("llll")}
+              </span>
+            </div>
+            {/**/}
+            <div className="wrapper comment">
+              <p>{props.comment.description}</p>
+            </div>
+            <div className="actions"></div>
+            <div className="v-dialog__container" style={{ display: "block" }} />
+          </div>
+          {/**/}
+          <div className="answers">{/**/}</div>
+        </div>
+      </div>
     </div>
   );
 
@@ -76,33 +85,23 @@ export default function EventAndComments(props) {
       backgroundColor: theme.palette.background.paper,
     },
     gridList: {
-      width: 500,
-      height: 450,
+      // width: 500,
+      height: 1850,
+      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+      transform: "translateZ(0)",
+    },
+    titleBar: {
+      background:
+        "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
+        "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
     },
     icon: {
-      color: "rgba(255, 255, 255, 0.54)",
+      color: "white",
     },
   }));
 
-  /**
-   * The example data is structured as follows:
-   *
-   * import image from 'path/to/image.jpg';
-   * [etc...]
-   *
-   * const tileData = [
-   *   {
-   *     img: image,
-   *     title: 'Image',
-   *     author: 'author',
-   *   },
-   *   {
-   *     [etc...]
-   *   },
-   * ];
-   */
-
   const classes = useStyles();
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -189,102 +188,103 @@ export default function EventAndComments(props) {
       ? comments.length + " " + "Comments"
       : comments.length + " " + "Comment";
 
-  const { Meta } = Card;
-
   return (
-    <Card
-      type="flex"
-      justify="center"
-      align="middle"
-      cover={
-        <img
-          alt="example"
-          style={{
-            height: "auto",
-            width: "auto",
-            maxWidth: "1000px",
-            maxHeight: "1000px",
-          }}
-          src={programs.programImage}
-        />
-      }
-    >
-      <Meta title={programs.title} description={programs.description} />
-      <br></br>
-      <Paper className={classes.paper}>{eventCommentList}</Paper>
-    </Card>
+    <div className="container-fluid p-0">
+      <div className="row  justify-content-center text-center">
+        <div className="col-12 col-lg-8 col-md-6 col-lg-4">
+          <div className="card">
+            <img
+              className="card-img"
+              src={programs.programImage}
+              alt="Bologna"
+            />
+            <div className="card-img-overlay">
+              <a href="#" className="btn btn-light btn-sm">
+                Cooking
+              </a>
+            </div>
+            <div className="card-body">
+              <h4 className="card-title">{programs.title}</h4>
+              <small className="text-muted cat">
+                <i className="far fa-clock text-info" /> 30 minutes
+                <i className="fas fa-users text-info" /> 4 portions
+              </small>
+              <p className="card-text">{programs.description}</p>
+              <a href="#" className="btn btn-outline-success">
+                {commentLengt}
+              </a>
+            </div>
+            <div className="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+              <div className="views">
+                {" "}
+                {moment(programs.createdAt).format("llll")}
+              </div>
+              <div className="stats">
+                <i className="far fa-eye" /> 1347
+                <i className="far fa-comment" /> 12
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="container">
+            <div className="row " />
+            <div className="col-sm-2"></div>
+            <div className="col-sm-10"></div>
+            <div className="row">
+              <div className="col-sm-2" />
+              <div className="col-sm-10">
+                <form className="form" onSubmit={onSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="name">Name:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="name"
+                      value={name}
+                      required
+                      onChange={handleChange("name")}
+                    />
+                    <br />
+                    <label htmlFor="comment">Comment:</label>
+                    <textarea
+                      className="form-control"
+                      rows={5}
+                      id="comment"
+                      required
+                      defaultValue={""}
+                      value={eventDescription}
+                      onChange={handleChange("description")}
+                    />
+                    <br />
+                  </div>
+
+                  <button type="submit" id="myBtn" class="btn btn-success">
+                    Submit
+                  </button>
+                </form>
+
+                <p id="warning" />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-2" />
+              <div className="col-sm-10" />
+            </div>
+            <div className="row">
+              <div className="col-sm-2"></div>
+              <div className="col-sm-10">
+                <table id="resultTable" className="table-striped">
+                  <tbody id="resultBody"></tbody>
+                </table>
+              </div>
+              <div className="table-responsive"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comments">{eventCommentList}</div>
+      </div>
+    </div>
   );
-  // <Grid
-  //   container
-  //   spacing={0}
-  //   direction="column"
-  //   alignItems="center"
-  //   justify="center"
-  //   style={{ minHeight: "100vh" }}
-  // >
-  //   <Card className={classes.root}>
-  //     <h3
-  //       style={{
-  //         background: "	#800000",
-  //         color: "white",
-  //         textAlign: "center",
-  //       }}
-  //       className={classes.cardheader}
-  //     >
-  //       {programs.title}
-  //     </h3>
-
-  //     <CardMedia
-  //       className={classes.media}
-  //       image={programs.programImage}
-  //       title="Paella dish"
-  //     />
-  //     <CardContent>
-  //       <Typography variant="body2" color="textSecondary" component="p">
-  //         {programs.description}
-  //       </Typography>
-  //     </CardContent>
-  //   </Card>
-
-  //   <>
-  //     <div>
-  //       <Button1 variant="outline-primary" size="sm">
-  //         {commentLengt}
-  //       </Button1>{" "}
-  //     </div>
-  //   </>
-  //   <br></br>
-
-  //   <form
-  //     className={classes.root}
-  //     noValidate
-  //     autoComplete="off"
-  //     onSubmit={onSubmit}
-  //   >
-  //     <FormControl>
-  //       <InputLabel htmlFor="component-simple">Name</InputLabel>
-  //       <Input
-  //         id="component-simple"
-  //         value={name}
-  //         onChange={handleChange("name")}
-  //         label="Name"
-  //       />
-  //     </FormControl>
-
-  //     <FormControl variant="outlined">
-  //       <InputLabel htmlFor="component-outlined">Description</InputLabel>
-  //       <OutlinedInput
-  //         id="component-outlined"
-  //         value={eventDescription}
-  //         onChange={handleChange("description")}
-  //         label="Description"
-  //         style={{ width: "42vw" }}
-  //       />
-  //     </FormControl>
-  //     <Button type="submit" fullWidth variant="contained" color="primary">
-  //       Create Comment
-  //     </Button>
-  //   </form>
-  //   <CardContent>{eventCommentList}</CardContent>
-  // </Grid>
 }
