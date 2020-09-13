@@ -111,7 +111,7 @@ export default function EventAndComments(props) {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:9000/programs/" +
+        "https://salty-thicket-72247.herokuapp.com/programs/" +
           props.match.params.id +
           "/programcomments"
       )
@@ -127,7 +127,7 @@ export default function EventAndComments(props) {
   const onPageLoad = () => {
     axios
       .get(
-        "http://localhost:9000/programs/" +
+        "https://salty-thicket-72247.herokuapp.com/programs/" +
           props.match.params.id +
           "/programcomments"
       )
@@ -162,7 +162,7 @@ export default function EventAndComments(props) {
       setDescription("");
       axios
         .post(
-          "http://localhost:9000/programs/" +
+          "https://salty-thicket-72247.herokuapp.com/programs/" +
             props.match.params.id +
             "/programcomment",
           { name: name, description: eventDescription }

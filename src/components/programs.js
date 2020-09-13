@@ -39,7 +39,7 @@ export default function Program() {
   }));
   useEffect(() => {
     axios
-      .get("http://localhost:9000/programs")
+      .get("https://salty-thicket-72247.herokuapp.com/programs")
       .then((response) => {
         setProgramData([...response.data]);
       })
