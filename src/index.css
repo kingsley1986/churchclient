@@ -231,7 +231,7 @@ a {
     0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
-*,
+/* *,
 :after,
 :before {
   box-sizing: inherit;
@@ -247,7 +247,7 @@ a {
   background-repeat: no-repeat;
   padding: 0;
   margin: 0;
-}
+} */
 
 a:active,
 a:hover {
