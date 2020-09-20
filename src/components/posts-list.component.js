@@ -4,6 +4,7 @@ import clsx from "clsx";
 
 import { Link } from "react-router-dom";
 import moment from "moment";
+import "./index.css";
 
 import {
   MDBRow,
