@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 
@@ -125,6 +124,9 @@ export default function Gallery() {
             </Button>
           </Toolbar>
         </AppBar>
+        {selectedTile && (
+          <div style={{ textAlign: "center" }}>{selectedTile.title}</div>
+        )}
 
         {selectedTile && (
           <img
@@ -136,22 +138,72 @@ export default function Gallery() {
               height: "auto",
             }}
             src={selectedTile.galleryImage}
-            alt={selectedTile.title}
           />
         )}
-        {/* <List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText
-              primary="Default notification ringtone"
-              secondary="Tethys"
-            />
-          </ListItem>
-        </List> */}
       </Dialog>
     </div>
   );
 }
+
+// import axios from "axios";
+// import React, { useState, useEffect, useCallback } from "react";
+// import Galleries from "react-photo-gallery";
+// import Carousel, { Modal, ModalGateway } from "react-images";
+
+// export default function Gallery() {
+//   const [currentImage, setCurrentImage] = useState(0);
+//   const [viewerIsOpen, setViewerIsOpen] = useState(false);
+//   const [photos, setGalleryData] = useState([]);
+
+//   useEffect(() => {
+//     axios
+//       .get("http://localhost:9000/galleries")
+//       .then((response) => {
+//         setGalleryData([
+//           ...response.data.map(function (gallery) {
+//             return {
+//               src: gallery.galleryImage,
+//               width: 4,
+//               height: 3,
+//               title: gallery.title,
+//             };
+//           }),
+//         ]);
+//       })
+//       .catch(function (error) {
+//         console.log(error);
+//       });
+//   }, []);
+//   useEffect(() => {
+//     // console.log(galleryData);
+//   }, [photos, setGalleryData]);
+
+//   const openLightbox = useCallback((event, { photo, index }) => {
+//     setCurrentImage(index);
+//     setViewerIsOpen(true);
+//   }, []);
+
+//   const closeLightbox = () => {
+//     setCurrentImage(0);
+//     setViewerIsOpen(false);
+//   };
+
+//   return (
+//     <div>
+//       <Galleries photos={photos} onClick={openLightbox} />
+//       <ModalGateway>
+//         {viewerIsOpen ? (
+//           <Modal onClose={closeLightbox}>
+//             <Carousel
+//               currentIndex={currentImage}
+//               views={photos.map((x) => ({
+//                 srcset: x.srcSet,
+//                 caption: x.title,
+//               }))}
+//             />
+//           </Modal>
+//         ) : null}
+//       </ModalGateway>
+//     </div>
+//   );
+// }
