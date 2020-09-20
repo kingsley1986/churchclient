@@ -86,6 +86,8 @@
   font-size: 0.8rem;
 }
 
+@import url("https://fonts.googleapis.com/css?family=Noto+Serif:400,700");
+
 body {
   background-color: #fafafa;
   font-family: "Noto Serif", serif;
@@ -191,7 +193,7 @@ a {
   vertical-align: middle;
 }
 
-.v-avatar img {
+/* .v-avatar img {
   border-radius: 50%;
   display: inline-flex;
   height: inherit;
@@ -265,7 +267,7 @@ button {
 button::-moz-focus-inner {
   border-style: 0;
   padding: 0;
-}
+} */
 
 [type="button"]::-moz-focus-inner,
 button:-moz-focusring {
