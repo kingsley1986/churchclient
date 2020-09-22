@@ -55,7 +55,7 @@ export default function Gallery() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:9000/galleries")
+      .get("https://salty-thicket-72247.herokuapp.com/galleries")
       .then((response) => {
         setGalleryData([...response.data]);
       })

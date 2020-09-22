@@ -9,63 +9,69 @@ import EventAndComments from "./components/event-comments.component";
 import GalleryList from "./components/galleries-list";
 import Program from "./components/programs";
 import ProgramComments from "./components/program-comments";
+import Slider from "react-animated-slider";
+import image1 from "./images/one.jpg";
+import "react-animated-slider/build/horizontal.css";
+import "normalize.css/normalize.css";
+import "./components/homepage-slider.css";
 
 class App extends Component {
   render() {
+    const content = [
+      {
+        title: "Vulputate Mollis Ultricies Fermentum Parturient",
+        description:
+          "Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis.",
+        button: "Read More",
+        image:
+          "https://www.ogscapital.com/wp-content/uploads/2016/10/church-business-plan.jpg",
+        user: "Luan Gjokaj",
+        userProfile: "https://i.imgur.com/JSW6mEk.png",
+      },
+      {
+        title: "Tortor Dapibus Commodo Aenean Quam",
+        description:
+          "Nullam id dolor id nibh ultricies vehicula ut id elit. Cras mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec sed odio dui.",
+        button: "Discover",
+        image:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSM5SzNAznPKGcAhoBTQ8ULKCJ20S2ZOE_NxQ&usqp=CAU",
+        user: "Erich Behrens",
+        userProfile: "https://i.imgur.com/0Clfnu7.png",
+      },
+      {
+        title: "Phasellus volutpat metus",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.",
+        button: "Buy now",
+        image: "https://i.imgur.com/DvmN8Hx.jpg",
+        user: "Bruno Vizovskyy",
+        userProfile: "https://i.imgur.com/4KeKvtH.png",
+      },
+    ];
     return (
-      <Router>
-        <div className="container">
-          <nav className="navbar navbar-expand-lg navbar-light big-light">
-            <a className="navbar-brand" href="/" target="_blank">
-              {/* <img src={logo} width="30" height="30" alt="/" /> */}
-            </a>
-
-            <Link to="/" className="navbar-brand">
-              Mern-stack To do App
-            </Link>
-            <div className="collapse navbar-collapse">
-              <ul className="navbar-nav mr-auto">
-                <li className="navbar-item">
-                  <Link to="/posts" className="nav-link">
-                    Posts
-                  </Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/events" className="nav-link">
-                    Events
-                  </Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/galleries" className="nav-link">
-                    Image Gallery
-                  </Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/programs" className="nav-link">
-                    {" "}
-                    programs
-                  </Link>
-                </li>
-              </ul>
+      <Slider className="slider-wrapper" autoplay={3000} infinite="true">
+        {content.map((item, index) => (
+          <div
+            key={index}
+            className="slider-content"
+            style={{
+              background: `url('${item.image}') no-repeat center center`,
+            }}
+          >
+            <div className="inner">
+              <h1>{item.title}</h1>
+              <p>{item.description}</p>
+              <button>{item.button}</button>
             </div>
-          </nav>
-          <Route path="/posts" exact component={PostsList} />
-          <Route path="/events" exact component={EventsList} />
-          <Route path="/programs" exact component={Program} />
-          <Route path="/galleries" exact component={GalleryList} />
-          <Route path="/posts/:id/comments" exact component={PostAndComments} />
-          <Route
-            path="/programs/:id/programcomments"
-            exact
-            component={ProgramComments}
-          />
-          <Route
-            path="/events/:id/eventcomments"
-            exact
-            component={EventAndComments}
-          />
-        </div>
-      </Router>
+            <section>
+              <img src={item.userProfile} alt={item.user} />
+              <span>
+                Posted by <strong>{item.user}</strong>
+              </span>
+            </section>
+          </div>
+        ))}
+      </Slider>
     );
   }
 }
