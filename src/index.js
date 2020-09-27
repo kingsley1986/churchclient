@@ -4,9 +4,6 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import $ from "jquery";
-import moment from "moment";
-
 import JavascriptTimeAgo from "javascript-time-ago";
 
 import en from "javascript-time-ago/locale/en";

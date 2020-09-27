@@ -23,8 +23,7 @@ class App extends Component {
         description:
           "Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis.",
         button: "Read More",
-        image:
-          "https://www.ogscapital.com/wp-content/uploads/2016/10/church-business-plan.jpg",
+        image: image1,
         user: "Luan Gjokaj",
         userProfile: "https://i.imgur.com/JSW6mEk.png",
       },
@@ -49,29 +48,74 @@ class App extends Component {
       },
     ];
     return (
-      <Slider className="slider-wrapper" autoplay={3000} infinite="true">
-        {content.map((item, index) => (
-          <div
-            key={index}
-            className="slider-content"
-            style={{
-              background: `url('${item.image}') no-repeat center center`,
-            }}
-          >
-            <div className="inner">
-              <h1>{item.title}</h1>
-              <p>{item.description}</p>
-              <button>{item.button}</button>
+      <Router>
+        <header className="header">
+          <a href className="logo">
+            <img
+              src="https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.jpg"
+              className="logoimage"
+            />
+          </a>
+          <input className="menu-btn" type="checkbox" id="menu-btn" />
+          <label className="menu-icon" htmlFor="menu-btn">
+            <span className="navicon" />
+          </label>
+          <ul className="menu">
+            <li className="contactme">
+              <a href="#work">Contact Me</a>
+            </li>
+            <li className="aboutme">
+              <a href="#about">About Me</a>
+            </li>
+            <li className="projects">
+              <a href="#careers">Projects</a>
+            </li>
+            <li className="Home">
+              <a href="#contact" className="Home">
+                Home
+              </a>
+            </li>
+          </ul>
+        </header>
+        <Slider className="slider-wrapper" autoplay={3000} infinite="true">
+          {content.map((item, index) => (
+            <div
+              key={index}
+              className="slider-content"
+              style={{
+                background: `url('${item.image}') no-repeat center center`,
+              }}
+            >
+              <div className="inner">
+                <h1>{item.title}</h1>
+                <p>{item.description}</p>
+                <button>{item.button}</button>
+              </div>
+              <section>
+                <img src={item.userProfile} alt={item.user} />
+                <span>
+                  Posted by <strong>{item.user}</strong>
+                </span>
+              </section>
             </div>
-            <section>
-              <img src={item.userProfile} alt={item.user} />
-              <span>
-                Posted by <strong>{item.user}</strong>
-              </span>
-            </section>
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+        <Route path="/posts" exact component={PostsList} />
+        <Route path="/events" exact component={EventsList} />
+        <Route path="/programs" exact component={Program} />
+        <Route path="/galleries" exact component={GalleryList} />
+        <Route path="/posts/:id/comments" exact component={PostAndComments} />
+        <Route
+          path="/programs/:id/programcomments"
+          exact
+          component={ProgramComments}
+        />
+        <Route
+          path="/events/:id/eventcomments"
+          exact
+          component={EventAndComments}
+        />
+      </Router>
     );
   }
 }
