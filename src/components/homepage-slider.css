@@ -545,7 +545,7 @@ a {
   cursor: pointer;
   display: inline-block;
   float: right;
-  padding: 28px 20px;
+  padding: 28px 30px;
   position: relative;
   user-select: none;
 }
@@ -668,7 +668,11 @@ a {
   max-width: 1200px;
   margin: 0 auto;
 }
-
+/* .row {
+  margin-left: -80px;
+  padding-left: 20px;
+  padding-right: 20px;
+} */
 .slick-slide {
   padding-right: 10px;
 }
@@ -727,3 +731,32 @@ a {
   height: 100px;
   overflow: hidden;
 } */
+
+/* product slider starts here  */
+body {
+  padding: 2rem 0rem;
+}
+.card {
+}
+
+.card-img {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.card-title {
+  margin-bottom: 0.3rem;
+}
+
+.cat {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.fa-users {
+  margin-left: 1rem;
+}
+
+.card-footer {
+  font-size: 0.8rem;
+}

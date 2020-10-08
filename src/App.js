@@ -49,25 +49,34 @@ const App = (props) => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 2,
+          slidesToScroll: 2,
           infinite: true,
           dots: true,
         },
       },
+      // {
+      //   breakpoint: 1200,
+      //   settings: {
+      //     slidesToShow: 2,
+      //     slidesToScroll: 2,
+      //     infinite: true,
+      //     dots: true,
+      //   },
+      // },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
     ],
@@ -161,22 +170,59 @@ const App = (props) => {
         <Slider2 {...settings}>
           {slides.map((slide, index) => {
             return (
-              <div key={index}>
-                {/* <ProductCard imgSrc={slide.postImage} /> */}
-                <img
-                  style={{ width: 400, height: 300 }}
-                  src={slide.postImage}
-                  alt={`slide${index}`}
-                />
-                <Card.Body>
-                  <Card.Title style={{ position: "relative", zIndex: 3 }}>
-                    Las Vegas, NV
-                  </Card.Title>
-                  <Card.Text>
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </Card.Text>
-                </Card.Body>
+              <div className="container">
+                <div
+                  className="row"
+                  style={{ marginLeft: -17, marginRight: -40 }}
+                >
+                  <div className="col-12 col-lg-12 col-lg-12 col-lg-12">
+                    <div className="card" style={{ marginLeft: 0 }}>
+                      <div
+                        style={{
+                          position: "relative",
+                          height: "250px",
+                          width: "100%",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <img
+                          style={{
+                            objectFit: "cover",
+                            height: "300px",
+                          }}
+                          className="card-img"
+                          src={slide.postImage}
+                          alt="Bologna"
+                        />
+                      </div>
+                      <div className="card-img-overlay">
+                        <a href="#" className="btn btn-light btn-sm">
+                          Cooking
+                        </a>
+                      </div>
+                      <div className="card-body">
+                        <h4 className="card-title">{slide.title}</h4>
+                        <small className="text-muted cat">
+                          <i className="far fa-clock text-info" /> 30 minutes
+                          <i className="fas fa-users text-info" /> 4 portions
+                        </small>
+                        <p className="card-text">
+                          {slide.description.substring(0, 100)}
+                        </p>
+                        <a href="#" className="btn btn-info">
+                          Read Recipe
+                        </a>
+                      </div>
+                      <div className="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                        <div className="views">Oct 20, 12:45PM</div>
+                        <div className="stats">
+                          <i className="far fa-eye" /> 1347
+                          <i className="far fa-comment" /> 12
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })}
