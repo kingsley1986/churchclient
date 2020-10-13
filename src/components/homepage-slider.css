@@ -310,7 +310,7 @@ button:hover {
 
 .slider-wrapper {
   position: relative;
-  height: 70vh;
+  height: 95vh;
   overflow: hidden;
 }
 
@@ -323,7 +323,7 @@ button:hover {
   height: auto; */
 
   /* Set up positioning */
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   background-size: cover !important;

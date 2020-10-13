@@ -22,8 +22,49 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Card } from "react-bootstrap";
 
-const App = (props) => {
+import { makeStyles } from "@material-ui/core/styles";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import IconButton from "@material-ui/core/IconButton";
+import InfoIcon from "@material-ui/icons/Info";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    width: 1200,
+    // height: 950,
+  },
+  icon: {
+    color: "rgba(255, 255, 255, 0.54)",
+  },
+}));
+
+export default function App(props) {
+  const theme = useTheme();
+
   const [slides, setSlides] = useState([]);
+  const [programData, setProgramData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://cryptic-shelf-72177.herokuapp.com/programs")
+      .then((response) => {
+        setProgramData([...response.data]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     axios
@@ -81,6 +122,7 @@ const App = (props) => {
       },
     ],
   };
+
   const content = [
     {
       title: "Vulputate Mollis Ultricies Fermentum Parturient",
@@ -111,6 +153,8 @@ const App = (props) => {
       userProfile: "https://i.imgur.com/4KeKvtH.png",
     },
   ];
+  const matches = useMediaQuery(theme.breakpoints.down("xs"));
+  const classes = useStyles();
 
   return (
     <Router>
@@ -228,6 +272,39 @@ const App = (props) => {
           })}
         </Slider2>
       </div>
+      <div className={classes.root}>
+        <GridList
+          cols={matches ? 1 : 3}
+          cellHeight={350}
+          className={classes.gridList}
+        >
+          {/* <GridListTile key="Subheader">
+            <ListSubheader component="div">December</ListSubheader>
+          </GridListTile> */}
+          {programData.length > 0 &&
+            programData.map((tile, index) => {
+              return (
+                <GridListTile
+                  key={Math.floor(Math.random() * new Date().getTime())}
+                >
+                  <img src={tile.programImage} alt={tile.title} />
+                  <GridListTileBar
+                    title={tile.title}
+                    subtitle={<span>by: {tile.author}</span>}
+                    actionIcon={
+                      <IconButton
+                        aria-label={`info about ${tile.title}`}
+                        className={classes.icon}
+                      >
+                        <InfoIcon />
+                      </IconButton>
+                    }
+                  />
+                </GridListTile>
+              );
+            })}
+        </GridList>
+      </div>
       <Route path="/posts" exact component={PostsList} />
       <Route path="/events" exact component={EventsList} />
       <Route path="/programs" exact component={Program} />
@@ -245,6 +322,4 @@ const App = (props) => {
       />
     </Router>
   );
-};
-
-export default App;
+}
