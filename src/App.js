@@ -15,7 +15,7 @@ import Slider from "react-animated-slider";
 import image1 from "./images/one.jpg";
 import "react-animated-slider/build/horizontal.css";
 import "normalize.css/normalize.css";
-import "./components/homepage-slider.css";
+import "./components/homepage.css";
 import ProductCard from "./components/product";
 import Slider2 from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -31,6 +31,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
+import ContactForm from "./components/contactForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -156,6 +157,29 @@ export default function App(props) {
   const matches = useMediaQuery(theme.breakpoints.down("xs"));
   const classes = useStyles();
 
+  const BACKEND_URL = "http://localhost:9000/contact_form/";
+
+  const [values, setValues] = useState({});
+
+  const saveForm = () => {
+    const sendAction = fetch(BACKEND_URL, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    sendAction.then(() => {
+      alert("thanks");
+      setValues({ name: "", email: "", request: "" });
+    });
+    sendAction.catch((err) => {
+      alert(err.message);
+    });
+  };
+
   return (
     <Router>
       <header className="header">
@@ -209,7 +233,7 @@ export default function App(props) {
           </div>
         ))}
       </Slider>
-      <div>
+      <div className="container">
         <h2> Don't miss these hotel + flight deals</h2>
         <Slider2 {...settings}>
           {slides.map((slide, index) => {
@@ -304,6 +328,15 @@ export default function App(props) {
               );
             })}
         </GridList>
+        <div>
+          {" "}
+          <ContactForm
+            values={values}
+            setValues={setValues}
+            onSubmit={saveForm}
+          />
+        </div>
+        ;
       </div>
       <Route path="/posts" exact component={PostsList} />
       <Route path="/events" exact component={EventsList} />
