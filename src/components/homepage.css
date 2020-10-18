@@ -692,15 +692,15 @@ a {
 }
 
 .slick-prev {
-  width: 50px;
-  left: 0;
-  top: 20%;
-  position: absolute;
-  height: 50px;
-  background: tomato;
-  z-index: 1;
-  border-radius: 50%;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  width: 50px !important;
+  left: 0 !important;
+  top: 20% !important;
+  position: absolute !important;
+  height: 50px !important;
+  background: tomato !important;
+  z-index: 1 !important;
+  border-radius: 50% !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23) !important;
 }
 .container {
   margin: 0 auto;
@@ -711,15 +711,15 @@ a {
 }
 
 .slick-next {
-  width: 50px;
-  right: 0;
-  top: 20%;
-  position: absolute;
-  height: 50px;
-  background: tomato;
-  z-index: 1;
-  border-radius: 50%;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  width: 50px !important;
+  right: 0 !important;
+  top: 20% !important;
+  position: absolute !important;
+  height: 50px !important;
+  background: tomato !important;
+  z-index: 1 !important;
+  border-radius: 50% !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23) !important;
 }
 
 .slick-prev:focus,
@@ -779,7 +779,7 @@ body {
   margin-top: 50px;
 } */
 .contactFormApp {
-  max-width: 335px;
+  max-width: 485px;
   margin: 0 auto;
 }
 /* p {
@@ -787,6 +787,12 @@ body {
   font-weight: 500;
   font-size: 28px;
 } */
+.center_div {
+  margin: 0 auto;
+  /* width: 80%; */
+  background: url("https://christianstt.com/wp-content/uploads/2014/03/Prayer-For-Unity-in-the-Body-of-Christ.jpg");
+}
+
 input[type="text"],
 input[type="email"],
 select,

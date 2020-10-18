@@ -233,17 +233,26 @@ export default function App(props) {
           </div>
         ))}
       </Slider>
-      <div className="container">
-        <h2> Don't miss these hotel + flight deals</h2>
+      <div className="sliderclass">
+        <h2 class="d-flex justify-content-center">
+          {" "}
+          These are the Upcoming Events. Are you coming?
+        </h2>
         <Slider2 {...settings}>
           {slides.map((slide, index) => {
             return (
-              <div className="container">
+              <div>
                 <div
                   className="row"
-                  style={{ marginLeft: -17, marginRight: -40 }}
+                  style={{
+                    marginLeft: -17,
+                    marginRight: -40,
+                  }}
                 >
-                  <div className="col-12 col-lg-12 col-lg-12 col-lg-12">
+                  <div
+                    className="col-12 col-lg-12 col-lg-12 col-lg-12"
+                    style={{ backgroundColor: "#CD5C5C	" }}
+                  >
                     <div className="card" style={{ marginLeft: 0 }}>
                       <div
                         style={{
@@ -296,14 +305,19 @@ export default function App(props) {
           })}
         </Slider2>
       </div>
+      <br></br>
+      <br></br>
       <div className={classes.root}>
         <GridList
           cols={matches ? 1 : 3}
           cellHeight={350}
           className={classes.gridList}
+          style={{ background: " #C0392B	", paddingTop: 30 }}
         >
           {/* <GridListTile key="Subheader">
-            <ListSubheader component="div">December</ListSubheader>
+            <ListSubheader component="div">
+              These are our different Activities
+            </ListSubheader>
           </GridListTile> */}
           {programData.length > 0 &&
             programData.map((tile, index) => {
@@ -328,15 +342,17 @@ export default function App(props) {
               );
             })}
         </GridList>
-        <div>
-          {" "}
-          <ContactForm
-            values={values}
-            setValues={setValues}
-            onSubmit={saveForm}
-          />
-        </div>
-        ;
+      </div>
+      <div
+        className="container center_div"
+        style={{ marginTop: 100, backgroundColor: "rgba(255, 0, 0, 0.4)" }}
+      >
+        {" "}
+        <ContactForm
+          values={values}
+          setValues={setValues}
+          onSubmit={saveForm}
+        />
       </div>
       <Route path="/posts" exact component={PostsList} />
       <Route path="/events" exact component={EventsList} />

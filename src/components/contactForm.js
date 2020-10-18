@@ -30,7 +30,7 @@ export default ContactForm;
 
 const ContactForm = ({ values, setValues, onSubmit }) => (
   <div className="contactFormApp">
-    <p>Contact Me</p>
+    <p>Send your prayer request here</p>
     <div>
       <form
         onSubmit={(evt) => {
