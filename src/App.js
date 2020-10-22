@@ -33,6 +33,25 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import ContactForm from "./components/contactForm";
 
+import clsx from "clsx";
+
+import Card2 from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import { red } from "@material-ui/core/colors";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+
+import moment from "moment";
+import { post } from "jquery";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -48,13 +67,72 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color: "rgba(255, 255, 255, 0.54)",
   },
+  root3: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: "rotate(180deg)",
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
 }));
 
 export default function App(props) {
+  const EventLive = (props) => (
+    <div>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            LIVE
+          </Avatar>
+        }
+        title={props.live ? props.live.title : ""}
+      />
+      <div>
+        {props.live
+          ? "Started" + " " + moment(props.live.startingDate).format("LLLL")
+          : ""}
+      </div>
+      <div>
+        {props.live
+          ? "Closing" + " " + moment(props.live.closingDate).format("LLLL")
+          : ""}
+      </div>
+      <CardMedia
+        className={classes.media}
+        image={props.live ? props.live.eventImage : ""}
+        title="Paella dish"
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {props.live ? props.live.description : ""}
+        </Typography>
+      </CardContent>
+    </div>
+  );
   const theme = useTheme();
 
   const [slides, setSlides] = useState([]);
   const [programData, setProgramData] = useState([]);
+  const [liveEventData, setLiveEvent] = useState([]);
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   useEffect(() => {
     axios
@@ -72,6 +150,17 @@ export default function App(props) {
       .get("https://cryptic-shelf-72177.herokuapp.com/posts")
       .then((response) => {
         setSlides([...response.data]);
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:9000/events/lives")
+      .then((response) => {
+        setLiveEvent([...response.data]);
         console.log(response.data);
       })
       .catch(function (error) {
@@ -179,6 +268,9 @@ export default function App(props) {
       alert(err.message);
     });
   };
+  let eventLive = liveEventData.map((live, k) => (
+    <EventLive live={live} key={k} />
+  ));
 
   return (
     <Router>
@@ -225,15 +317,16 @@ export default function App(props) {
               <button>{item.button}</button>
             </div>
             <section>
-              <img src={item.userProfile} alt={item.user} />
-              <span>
-                Posted by <strong>{item.user}</strong>
-              </span>
+              <div>
+                <Card2 className={classes.root3}>
+                  {eventLive ? eventLive : ""}
+                </Card2>
+              </div>
             </section>
           </div>
         ))}
       </Slider>
-      <div className="sliderclass">
+      <div className="sliderclass" style={{}}>
         <h2 class="d-flex justify-content-center">
           {" "}
           These are the Upcoming Events. Are you coming?
@@ -271,11 +364,11 @@ export default function App(props) {
                           alt="Bologna"
                         />
                       </div>
-                      <div className="card-img-overlay">
+                      {/* <div className="card-img-overlay">
                         <a href="#" className="btn btn-light btn-sm">
                           Cooking
                         </a>
-                      </div>
+                      </div> */}
                       <div className="card-body">
                         <h4 className="card-title">{slide.title}</h4>
                         <small className="text-muted cat">
@@ -310,8 +403,9 @@ export default function App(props) {
         <GridList
           cols={matches ? 1 : 3}
           cellHeight={350}
+          spacing={15}
           className={classes.gridList}
-          style={{ background: " #C0392B	", paddingTop: 30 }}
+          style={{ paddingTop: 30 /*background: " #C0392B	",*/ }}
         >
           {/* <GridListTile key="Subheader">
             <ListSubheader component="div">
@@ -322,6 +416,7 @@ export default function App(props) {
             programData.map((tile, index) => {
               return (
                 <GridListTile
+                  className="shadow"
                   key={Math.floor(Math.random() * new Date().getTime())}
                 >
                   <img src={tile.programImage} alt={tile.title} />
