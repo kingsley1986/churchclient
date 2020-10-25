@@ -147,7 +147,7 @@ export default function App(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:9000/events/upcomingevents")
+      .get("https://cryptic-shelf-72177.herokuapp.com/events/upcomingevents")
       .then((response) => {
         setSlides([...response.data]);
         console.log(response.data);
@@ -158,7 +158,7 @@ export default function App(props) {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:9000/events/lives")
+      .get("https://cryptic-shelf-72177.herokuapp.com/events/lives")
       .then((response) => {
         setLiveEvent([...response.data]);
         console.log(response.data);
