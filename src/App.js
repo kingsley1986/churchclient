@@ -98,14 +98,14 @@ export default function App(props) {
             LIVE
           </Avatar>
         }
-        title={props.live ? props.live.title : ""}
+        title={props.live.title}
       />
-      <div>
+      <div className="dateevent">
         {props.live
           ? "Started" + " " + moment(props.live.startingDate).format("LLLL")
           : ""}
       </div>
-      <div>
+      <div className="dateevent">
         {props.live
           ? "Closing" + " " + moment(props.live.closingDate).format("LLLL")
           : ""}
@@ -117,7 +117,7 @@ export default function App(props) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {props.live ? props.live.description : ""}
+          {props.live.description.substring(0, 70)}
         </Typography>
       </CardContent>
     </div>
@@ -147,7 +147,7 @@ export default function App(props) {
 
   useEffect(() => {
     axios
-      .get("https://cryptic-shelf-72177.herokuapp.com/posts")
+      .get("http://localhost:9000/events/upcomingevents")
       .then((response) => {
         setSlides([...response.data]);
         console.log(response.data);
@@ -318,15 +318,18 @@ export default function App(props) {
             </div>
             <section>
               <div>
-                <Card2 className={classes.root3}>
-                  {eventLive ? eventLive : ""}
+                <Card2
+                  // style={{ width: "50vh", height: "53vh" }}
+                  className={classes.root3}
+                >
+                  {eventLive}
                 </Card2>
               </div>
             </section>
           </div>
         ))}
       </Slider>
-      <div className="sliderclass" style={{}}>
+      <div className="sliderclass" style={{ padding: 12 }}>
         <h2 class="d-flex justify-content-center">
           {" "}
           These are the Upcoming Events. Are you coming?
@@ -343,7 +346,7 @@ export default function App(props) {
                 >
                   <div
                     className="col-12 col-lg-12 col-lg-12 col-lg-12"
-                    style={{ backgroundColor: "#CD5C5C	" }}
+                    style={{ backgroundColor: "#CD5C5C" }}
                   >
                     <div className="card" style={{ marginLeft: 0 }}>
                       <div
@@ -360,7 +363,7 @@ export default function App(props) {
                             height: "300px",
                           }}
                           className="card-img"
-                          src={slide.postImage}
+                          src={slide.eventImage}
                           alt="Bologna"
                         />
                       </div>
@@ -371,22 +374,47 @@ export default function App(props) {
                       </div> */}
                       <div className="card-body">
                         <h4 className="card-title">{slide.title}</h4>
+                        <button
+                          type="button"
+                          class="btn btn-outline-success btn-lg btn-block"
+                        >
+                          400 People coming
+                        </button>
                         <small className="text-muted cat">
-                          <i className="far fa-clock text-info" /> 30 minutes
-                          <i className="fas fa-users text-info" /> 4 portions
+                          <i className="far fa-clock text-info" />{" "}
+                          <strong>Starting</strong>
+                          <span>
+                            {" "}
+                            {moment(slide.startingDate).format("LLLL")}
+                          </span>
+                          <i className="fas fa-users text-info" />{" "}
+                          {slide.going + slide.coming_with}
+                          <div className="views">
+                            <strong>Closing</strong>{" "}
+                            <span class="ingredient">
+                              {moment(slide.closingDate).format("LLLL")}
+                            </span>
+                          </div>
                         </small>
                         <p className="card-text">
                           {slide.description.substring(0, 100)}
                         </p>
-                        <a href="#" className="btn btn-info">
-                          Read Recipe
+
+                        <a href="#" className="btn btn-info btn-lg btn-block">
+                          Click here if you want to attend
                         </a>
                       </div>
                       <div className="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
-                        <div className="views">Oct 20, 12:45PM</div>
+                        {/* <div className="views">
+                          <strong>Closing</strong>{" "}
+                          <span class="ingredient">
+                            {moment(slide.closingDate).format("LLLL")}
+                          </span>
+                        </div> */}
                         <div className="stats">
-                          <i className="far fa-eye" /> 1347
-                          <i className="far fa-comment" /> 12
+                          {/* <i className="far fa-eye" /> 1347 */}
+                          <i className="far fa-comment" />{" "}
+                          {slide.eventcomments.length}
                         </div>
                       </div>
                     </div>
@@ -399,7 +427,7 @@ export default function App(props) {
       </div>
       <br></br>
       <br></br>
-      <div className={classes.root}>
+      <div className={classes.root} style={{ padding: 12 }}>
         <GridList
           cols={matches ? 1 : 3}
           cellHeight={350}

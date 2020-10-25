@@ -673,6 +673,11 @@ a {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
+
+  box-shadow: 0px 0px 8px 8px rgb(161, 159, 159) !important;
+  -webkit-box-shadow: 0px 0px 5px 5px rgb(165, 163, 163) !important;
+  -moz-box-shadow: 0px 0px 8px 8px rgb(128, 123, 123) !important;
+  margin-top: 30px;
 }
 /* .row {
   margin-left: -80px;
@@ -682,12 +687,10 @@ a {
 .slick-slide {
   padding-right: 10px;
 
+  /* 
   margin-top: 30px;
   display: block !important;
-  float: left !important;
-  box-shadow: 0px 0px 8px 8px rgb(161, 159, 159) !important;
-  -webkit-box-shadow: 0px 0px 5px 5px rgb(165, 163, 163) !important;
-  -moz-box-shadow: 0px 0px 8px 8px rgb(128, 123, 123) !important;
+  float: left !important; */
 }
 
 .slick-slide:last-child {
@@ -758,6 +761,8 @@ body {
 }
 .card {
   margin-top: 20px;
+  padding-top: 4px;
+  /* padding-bottom: 4px; */
 }
 
 .card-img {
@@ -836,21 +841,30 @@ button[type="submit"]:hover {
 /* this is for live events styling */
 div.MuiCardHeader-content span {
   color: red;
+  font-size: 20px;
+  font-weight: bolder;
+  font-style: italic;
+  font-family: Verdana;
 }
-.MuiCardHeader-avatar {
-  width: 30px;
+div.dateevent {
+  color: #f70d04;
 }
 
 .makeStyles-avatar-8 {
-  width: 80px !important;
-  height: 80px !important;
+  width: 7vh !important;
+  height: 7vh !important;
   font-weight: bolder;
-  font-size: 30px !important;
+  font-size: 3vh !important;
 }
 
-/* .MuiPaper-root.MuiCard-root.makeStyles-root3-4.MuiPaper-elevation1.MuiPaper-rounded {
-  width: 30px;
-} */
+li.MuiGridListTile-root {
+  background-color: rgb(243, 75, 75);
+}
+
+.MuiGridList-root {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 8px 0px 6px,
+    rgba(14, 30, 37, 0.32) 2px 6px 3px 0px;
+}
 /* footer starts here  */
 
 ul {
