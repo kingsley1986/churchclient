@@ -147,7 +147,7 @@ export default function App(props) {
 
   useEffect(() => {
     axios
-      .get("https://cryptic-shelf-72177.herokuapp.com/events/upcomingevents")
+      .get("http://localhost:9000/events/")
       .then((response) => {
         setSlides([...response.data]);
         console.log(response.data);
@@ -167,6 +167,17 @@ export default function App(props) {
         console.log(error);
       });
   }, []);
+
+  const goingPeople = (going, coming_with) => {
+    console.log(going + coming_with);
+    if (going + coming_with === 1) {
+      return going + coming_with + " Person Going";
+    } else if (going === 0) {
+      return "No one have signed up yet";
+    } else {
+      return going + coming_with + " People Going";
+    }
+  };
 
   var settings = {
     dots: false,
@@ -360,7 +371,7 @@ export default function App(props) {
                         <img
                           style={{
                             objectFit: "cover",
-                            height: "300px",
+                            height: "200px",
                           }}
                           className="card-img"
                           src={slide.eventImage}
@@ -374,49 +385,59 @@ export default function App(props) {
                       </div> */}
                       <div className="card-body">
                         <h4 className="card-title">{slide.title}</h4>
-                        <button
-                          type="button"
-                          class="btn btn-outline-success btn-lg btn-block"
+                        <div className="text-center">
+                          {" "}
+                          <button
+                            type="button"
+                            class="
+                          btn btn-md btn-outline-success py-0 
+                          "
+                          >
+                            {goingPeople(slide.going, slide.coming_with)}
+                          </button>
+                        </div>
+
+                        <small
+                          className="text-muted cat"
+                          className="text-center"
                         >
-                          400 People coming
-                        </button>
-                        <small className="text-muted cat">
-                          <i className="far fa-clock text-info" />{" "}
-                          <strong>Starting</strong>
-                          <span>
-                            {" "}
-                            {moment(slide.startingDate).format("LLLL")}
-                          </span>
-                          <i className="fas fa-users text-info" />{" "}
-                          {slide.going + slide.coming_with}
+                          <div className="text-center">
+                            <i className="far fa-clock text-info" />{" "}
+                            <strong>Starting</strong>
+                            <span class="startingclass">
+                              {" "}
+                              {moment(slide.startingDate).format("LLLL")}
+                            </span>
+                          </div>
+                          {/* <i className="fas fa-users text-info" />{" "} */}
                           <div className="views">
                             <strong>Closing</strong>{" "}
-                            <span class="ingredient">
+                            <span class="ingredient endingclass">
                               {moment(slide.closingDate).format("LLLL")}
                             </span>
                           </div>
                         </small>
-                        <p className="card-text">
-                          {slide.description.substring(0, 100)}
+                        <p className="card-text text-center">
+                          {slide.description.substring(0, 95)}
                         </p>
 
                         <a href="#" className="btn btn-info btn-lg btn-block">
                           Click here if you want to attend
                         </a>
                       </div>
-                      <div className="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
-                        {/* <div className="views">
+                      {/* <div className="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                        <div className="views">
                           <strong>Closing</strong>{" "}
                           <span class="ingredient">
                             {moment(slide.closingDate).format("LLLL")}
                           </span>
-                        </div> */}
+                        </div>
                         <div className="stats">
-                          {/* <i className="far fa-eye" /> 1347 */}
+                          <i className="far fa-eye" /> 1347
                           <i className="far fa-comment" />{" "}
                           {slide.eventcomments.length}
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

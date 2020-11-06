@@ -396,6 +396,45 @@ body {
   /* padding-top: 75px; */
 }
 
+.startingclass,
+.endingclass {
+  -webkit-animation: background 5s cubic-bezier(1, 0, 0, 1) infinite;
+  animation: background 5s cubic-bezier(1, 0, 0, 1) infinite;
+  font-size: 13.5px;
+  font-weight: bold;
+  border: solid LightGrey 2px;
+}
+
+@-webkit-keyframes background {
+  0% {
+    background-color: #f99;
+  }
+  33% {
+    background-color: #9f9;
+  }
+  67% {
+    background-color: #99f;
+  }
+  100% {
+    background-color: #f99;
+  }
+}
+
+@keyframes background {
+  0% {
+    background-color: #f99;
+  }
+  33% {
+    background-color: #9f9;
+  }
+  67% {
+    background-color: #99f;
+  }
+  100% {
+    background-color: #f99;
+  }
+}
+
 header {
   position: fixed;
   top: 0;
@@ -663,10 +702,11 @@ a {
 
 /* Events slider starts here */
 
-.col-12.col-lg-12.col-lg-12.col-lg-12 {
-}
 .slick-track {
   display: flex;
+  height: 600px;
+  padding-top: 68px;
+  margin-top: -70px;
 }
 .slick-slider {
   display: flex;
@@ -772,6 +812,10 @@ body {
 
 .card-title {
   margin-bottom: 0.3rem;
+  margin-top: -45px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 3.3vh;
 }
 
 .cat {
@@ -779,13 +823,13 @@ body {
   margin-bottom: 1rem;
 }
 
-.fa-users {
+/* .fa-users {
   margin-left: 1rem;
-}
+} */
 
-.card-footer {
+/* .card-footer {
   font-size: 0.8rem;
-}
+} */
 
 /* contact form started here  */
 
