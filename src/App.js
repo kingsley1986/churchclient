@@ -69,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
   },
   root3: {
     maxWidth: 345,
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: 250,
+      maxHeight: 350,
+    },
   },
   media: {
     height: 0,
@@ -101,14 +105,14 @@ export default function App(props) {
         title={props.live.title}
       />
       <div className="dateevent">
-        {props.live
-          ? "Started" + " " + moment(props.live.startingDate).format("LLLL")
-          : ""}
+        <div class="livestartedclass col-md-4">Started:</div>
+
+        {moment(props.live.startingDate).format("LLLL")}
       </div>
       <div className="dateevent">
-        {props.live
-          ? "Closing" + " " + moment(props.live.closingDate).format("LLLL")
-          : ""}
+        <div class="liveendingclass">Closing:</div>
+
+        {moment(props.live.closingDate).format("LLLL")}
       </div>
       <CardMedia
         className={classes.media}
@@ -136,7 +140,7 @@ export default function App(props) {
 
   useEffect(() => {
     axios
-      .get("https://cryptic-shelf-72177.herokuapp.com/programs")
+      .get("http://localhost:9000/programs")
       .then((response) => {
         setProgramData([...response.data]);
       })
@@ -158,7 +162,7 @@ export default function App(props) {
   }, []);
   useEffect(() => {
     axios
-      .get("https://cryptic-shelf-72177.herokuapp.com/events/lives")
+      .get("http://localhost:9000/events/lives")
       .then((response) => {
         setLiveEvent([...response.data]);
         console.log(response.data);
@@ -169,7 +173,6 @@ export default function App(props) {
   }, []);
 
   const goingPeople = (going, coming_with) => {
-    console.log(going + coming_with);
     if (going + coming_with === 1) {
       return going + coming_with + " Person Going";
     } else if (going === 0) {
@@ -470,16 +473,22 @@ export default function App(props) {
                 >
                   <img src={tile.programImage} alt={tile.title} />
                   <GridListTileBar
+                    titlePosition="top"
                     title={tile.title}
-                    subtitle={<span>by: {tile.author}</span>}
-                    actionIcon={
-                      <IconButton
-                        aria-label={`info about ${tile.title}`}
-                        className={classes.icon}
-                      >
-                        <InfoIcon />
-                      </IconButton>
-                    }
+                    // subtitle={<span>by: {tile.author}</span>}
+                    // actionIcon={
+                    //   <IconButton
+                    //     aria-label={`info about ${tile.title}`}
+                    //     className={classes.icon}
+                    //   >
+                    //     <InfoIcon />
+                    //   </IconButton>
+                    // }
+                  />
+                  <GridListTileBar
+                    className="mySubtitle"
+                    style={{ fontSize: 10 }}
+                    title={tile.description}
                   />
                 </GridListTile>
               );
