@@ -424,7 +424,10 @@ export default function App(props) {
                           {slide.description.substring(0, 95)}
                         </p>
 
-                        <a href="#" className="btn btn-info btn-lg btn-block">
+                        <a
+                          href={"/events/" + slide._id + "/eventcomments"}
+                          className="btn btn-info btn-lg btn-block"
+                        >
                           Click here if you want to attend
                         </a>
                       </div>
