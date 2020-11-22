@@ -851,10 +851,13 @@ body {
   background: url("https://christianstt.com/wp-content/uploads/2014/03/Prayer-For-Unity-in-the-Body-of-Christ.jpg");
 }
 
-input[type="text"],
+/* input[type="text"],
 input[type="email"],
 select,
-textarea {
+textarea */
+
+.contactinput,
+select {
   width: 100%;
   padding: 12px;
   border: 2px solid rgb(10, 90, 17);
@@ -882,13 +885,13 @@ button[type="submit"]:hover {
 }
 
 /* this is for live events styling */
-div.MuiCardHeader-content span {
+/* div.MuiCardHeader-content span {
   color: red;
   font-size: 3.9vmin;
   font-weight: bolder;
   font-style: italic;
   font-family: Verdana;
-}
+} */
 div.dateevent {
   color: #f70d04;
   /* font-size: 5vmin; */

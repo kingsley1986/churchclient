@@ -25,11 +25,13 @@ import AddComingWithModal from "./components/coming-with-modal.component";
 
 import Header from "./components/Header";
 import Home from "./components/home";
+import Footer from "./components/footer";
 
 export default function App(props) {
   return (
     <Router>
       <Header />
+
       <Route
         path="/events/:id/coming_with"
         exact
@@ -82,6 +84,7 @@ export default function App(props) {
           <Route path="/galleries" exact component={GalleryList} />
         </Route>
       </Switch>
+      <Footer />
     </Router>
   );
 }

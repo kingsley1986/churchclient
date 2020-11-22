@@ -256,7 +256,7 @@ export default function EventAndComments(props) {
       justify="center"
       style={{ minHeight: "100vh" }}
     >
-      <Card className={classes.root}>
+      <Card className={classes.root} style={{ marginTop: "5vw" }}>
         <h3
           style={{
             background: "	#800000",

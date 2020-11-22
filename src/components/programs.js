@@ -23,7 +23,7 @@ export default function Program() {
       backgroundColor: theme.palette.background.paper,
     },
     gridList: {
-      width: 1100,
+      // width: 1100,
     },
     icon: {
       color: "rgba(255, 255, 255, 0.54)",
@@ -50,13 +50,13 @@ export default function Program() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ padding: "3vw" }}>
       <GridListTile key="Subheader" style={{ height: "auto" }}></GridListTile>
       <GridList
         cellHeight={550}
         cols={matches ? 1 : 3}
         className={classes.gridList}
-        spacing={8}
+        spacing={12}
         style={{ background: "#A52A2A		" }}
       >
         {programData.length > 0 &&

@@ -104,7 +104,7 @@ export default function EventsList() {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ padding: "2.5vw", marginTop: 60 }}>
       <GridList
         cellHeight={420}
         className={classes.gridList}
@@ -117,53 +117,56 @@ export default function EventsList() {
               style={{
                 marginBottom: "2rem",
                 textDecoration: "none",
+                background: "#C9C9C9",
               }}
               component={Link}
               to={"/events/" + event._id + "/eventcomments"}
               key={Math.floor(Math.random() * new Date().getTime())}
             >
-              <h3
-                style={{
-                  background: "	#800000",
-                  color: "white",
-                  textAlign: "center",
-                }}
-                className={classes.cardheader}
-              >
-                {getEventTitle(event.title)}
-              </h3>
-
-              <CardHeader
-                avatar={
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    CB
-                  </Avatar>
-                }
-                title={getTitle(
-                  Date.parse(event.startingDate),
-                  Date.parse(event.closingDate)
-                )}
-                subheader={getEnded(
-                  Date.parse(event.startingDate),
-                  Date.parse(event.closingDate)
-                )}
-                style={{ background: "#DCDCDC" }}
-              />
-              <CardMedia
-                className={classes.media}
-                image={event.eventImage}
-                title="Paella dish"
-              />
-              <CardContent>
-                <Typography
-                  style={{ color: "black", fontSize: "16px" }}
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
+              <div style={{ background: "white" }}>
+                <h3
+                  style={{
+                    background: "	#800000",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                  className={classes.cardheader}
                 >
-                  {event.description.substring(0, 100)}....
-                </Typography>
-              </CardContent>
+                  {getEventTitle(event.title)}
+                </h3>
+
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      CB
+                    </Avatar>
+                  }
+                  title={getTitle(
+                    Date.parse(event.startingDate),
+                    Date.parse(event.closingDate)
+                  )}
+                  subheader={getEnded(
+                    Date.parse(event.startingDate),
+                    Date.parse(event.closingDate)
+                  )}
+                  style={{ background: "#DCDCDC" }}
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={event.eventImage}
+                  title="Paella dish"
+                />
+                <CardContent>
+                  <Typography
+                    style={{ color: "black", fontSize: "16px" }}
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {event.description.substring(0, 100)}....
+                  </Typography>
+                </CardContent>
+              </div>
             </Card>
           );
         })}

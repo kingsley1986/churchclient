@@ -16,16 +16,16 @@ export default function Header() {
         </label>
         <ul className="menu">
           <li className="contactme">
-            <a href="#work">Contact Me</a>
+            <a href="/events">Events</a>
           </li>
           <li className="aboutme">
-            <a href="#about">About Me</a>
+            <a href="/programs">Programs</a>
           </li>
           <li className="projects">
-            <a href="#careers">Projects</a>
+            <a href="/posts">Posts</a>
           </li>
           <li className="Home">
-            <a href="#contact" className="Home">
+            <a href="/" className="Home">
               Home
             </a>
           </li>

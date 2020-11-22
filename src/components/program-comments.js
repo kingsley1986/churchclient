@@ -191,7 +191,7 @@ export default function ProgramComments(props) {
       : comments.length + " " + "Comment";
 
   return (
-    <div className="container-fluid p-0">
+    <div className="container-fluid p-0" style={{ marginTop: "3vw" }}>
       <div className="row  justify-content-center text-center">
         <div className="col-12 col-lg-8 col-md-6 col-lg-4">
           <div className="card">

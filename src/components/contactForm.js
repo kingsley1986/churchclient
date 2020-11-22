@@ -40,6 +40,7 @@ const ContactForm = ({ values, setValues, onSubmit }) => (
       >
         <label>Name</label>
         <input
+          className="contactinput"
           type="text"
           id="fname"
           name="name"
@@ -57,6 +58,7 @@ const ContactForm = ({ values, setValues, onSubmit }) => (
 
         <label>Email</label>
         <input
+          className="contactinput"
           type="email"
           id="email"
           name="email"
@@ -67,6 +69,7 @@ const ContactForm = ({ values, setValues, onSubmit }) => (
 
         <label>Message</label>
         <textarea
+          className="contactinput"
           value={values.request}
           placeholder="Type you message here.."
           onChange={(evt) =>

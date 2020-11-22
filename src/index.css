@@ -451,7 +451,6 @@ table {
 .form-control {
   width: 80% !important;
 }
-
 @media screen and (max-width: 640px) {
   .form-group {
     margin-left: 35px !important;
