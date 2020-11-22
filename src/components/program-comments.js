@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
+
 import axios from "axios";
 import AddComingWithModal from "../components/coming-with-modal.component";
 import { makeStyles } from "@material-ui/core/styles";
@@ -41,8 +42,8 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import InfoIcon from "@material-ui/icons/Info";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
-export default function EventAndComments(props) {
-  const EventComment = (props) => (
+export default function ProgramComments(props) {
+  const ProgramComment = (props) => (
     <div className="comment-container theme--light">
       <div className="comments">
         <div>
@@ -108,10 +109,11 @@ export default function EventAndComments(props) {
     setExpanded(!expanded);
   };
 
+  console.log(props.match.params);
   useEffect(() => {
     axios
       .get(
-        "https://cryptic-shelf-72177.herokuapp.com/programs/" +
+        "http://localhost:9000/programs/" +
           props.match.params.id +
           "/programcomments"
       )
@@ -127,7 +129,7 @@ export default function EventAndComments(props) {
   const onPageLoad = () => {
     axios
       .get(
-        "https://cryptic-shelf-72177.herokuapp.com/programs/" +
+        "http://localhost:9000/programs/" +
           props.match.params.id +
           "/programcomments"
       )
@@ -162,7 +164,7 @@ export default function EventAndComments(props) {
       setDescription("");
       axios
         .post(
-          "https://cryptic-shelf-72177.herokuapp.com/programs/" +
+          "http://localhost:9000/programs/" +
             props.match.params.id +
             "/programcomment",
           { name: name, description: eventDescription }
@@ -180,7 +182,7 @@ export default function EventAndComments(props) {
   );
 
   let eventCommentList = comments.map((comment, k) => (
-    <EventComment comment={comment} key={k} />
+    <ProgramComment comment={comment} key={k} />
   ));
 
   let commentLengt =

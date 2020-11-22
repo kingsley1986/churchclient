@@ -53,7 +53,7 @@ export default function EventAndComments(props) {
   );
 
   const theme = useTheme();
-  const [events, setEventData] = useState([]);
+  const [oneEvents, setEventData] = useState([]);
   const [comments, setCommentData] = useState([]);
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -89,10 +89,45 @@ export default function EventAndComments(props) {
     setExpanded(!expanded);
   };
 
+  // const fetchData = () => {
+  //   const theEvent =
+  //     "http://localhost:9000/events/" +
+  //     props.match.params.id +
+  //     "/eventcomments";
+  //   const theEventComments =
+  //     "http://localhost:9000/events/" +
+  //     props.match.params.id +
+  //     "/eventcomments";
+
+  //   const gettheEvent = axios.get(theEvent);
+  //   const gettheEventComments = axios.get(theEventComments);
+
+  //   axios.all([gettheEvent, gettheEventComments]).then(
+  //     axios.spread((...allData) => {
+  //       const events = allData;
+  //       const eventComments = allData;
+
+  //       setEventData(events);
+  //       setCommentData(eventComments);
+  //       console.log(events);
+  //       console.log(eventComments);
+  //     })
+  //   );
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, [events]);
+
+  const arrayPropToUse = React.useMemo(() => {
+    if (!Array.isArray(props)) return [];
+    return props;
+  }, [props]);
+
   useEffect(() => {
     axios
       .get(
-        "https://cryptic-shelf-72177.herokuapp.com/events/" +
+        "http://localhost:9000/events/" +
           props.match.params.id +
           "/eventcomments"
       )
@@ -104,11 +139,12 @@ export default function EventAndComments(props) {
       .catch(function (error) {
         console.log(error);
       });
-  }, [events]);
+  }, [arrayPropToUse]);
+
   const onPageLoad = () => {
     axios
       .get(
-        "https://cryptic-shelf-72177.herokuapp.com/events/" +
+        "http://localhost:9000/events/" +
           props.match.params.id +
           "/eventcomments"
       )
@@ -173,7 +209,7 @@ export default function EventAndComments(props) {
       setDescription("");
       axios
         .post(
-          "https://cryptic-shelf-72177.herokuapp.com/events/" +
+          "http://localhost:9000/events/" +
             props.match.params.id +
             "/eventcomment",
           { name: name, description: eventDescription }
@@ -192,11 +228,7 @@ export default function EventAndComments(props) {
 
   const updateGoing = (going) => {
     axios
-      .get(
-        "https://cryptic-shelf-72177.herokuapp.com/events/" +
-          props.match.params.id +
-          "/going"
-      )
+      .get("http://localhost:9000/events/" + props.match.params.id + "/going")
       .then((response) => {
         setEventData(response.data);
       });
@@ -211,9 +243,9 @@ export default function EventAndComments(props) {
       ? comments.length + " " + "Comments"
       : comments.length + " " + "Comment";
   let goingAndComingwith =
-    events.going + events.coming_with <= 1
-      ? events.going + events.coming_with + " " + "Person Coming"
-      : events.going + events.coming_with + " " + "People are Coming";
+    oneEvents.going + oneEvents.coming_with <= 1
+      ? oneEvents.going + oneEvents.coming_with + " " + "Person Coming"
+      : oneEvents.going + oneEvents.coming_with + " " + "People are Coming";
 
   return (
     <Grid
@@ -233,7 +265,7 @@ export default function EventAndComments(props) {
           }}
           className={classes.cardheader}
         >
-          {events.title}
+          {oneEvents.title}
         </h3>
         <CardHeader
           avatar={
@@ -247,23 +279,23 @@ export default function EventAndComments(props) {
             </IconButton>
           }
           title={getTitle(
-            Date.parse(events.startingDate),
-            Date.parse(events.closingDate)
+            Date.parse(oneEvents.startingDate),
+            Date.parse(oneEvents.closingDate)
           )}
           subheader={getEnded(
-            Date.parse(events.startingDate),
-            Date.parse(events.closingDate)
+            Date.parse(oneEvents.startingDate),
+            Date.parse(oneEvents.closingDate)
           )}
           style={{ background: "#DCDCDC" }}
         />
         <CardMedia
           className={classes.media}
-          image={events.eventImage}
+          image={oneEvents.eventImage}
           title="Paella dish"
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            {events.description}
+            {oneEvents.description}
           </Typography>
         </CardContent>
       </Card>
@@ -285,7 +317,7 @@ export default function EventAndComments(props) {
             size="sm"
             color="primary"
             onClick={() => {
-              updateGoing(events._id);
+              updateGoing(oneEvents._id);
               setModalShow(true);
             }}
           >
@@ -298,7 +330,7 @@ export default function EventAndComments(props) {
       <AddComingWithModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        state={events._id}
+        state={oneEvents._id}
         history={props.history}
       />
 
