@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
@@ -42,6 +42,8 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import InfoIcon from "@material-ui/icons/Info";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
+import ReCAPTCHA from "react-google-recaptcha";
+
 export default function ProgramComments(props) {
   const ProgramComment = (props) => (
     <div className="comment-container theme--light">
@@ -77,6 +79,11 @@ export default function ProgramComments(props) {
   const theme = useTheme();
   const [programs, setProgramData] = useState([]);
   const [comments, setCommentData] = useState([]);
+  const [verified, setVerified] = useState(false);
+  const [error, setError] = useState("");
+  const [token, setToken] = useState("");
+  const reCaptcha = useRef();
+
   const useStyles = makeStyles((theme) => ({
     root: {
       display: "flex",
@@ -100,6 +107,21 @@ export default function ProgramComments(props) {
       color: "white",
     },
   }));
+
+  const recaptchaLoaded = () => {
+    console.log("capcha successfully loaded");
+  };
+
+  // const handleSubscribe = () => {
+  //   if (verified) {
+  //     alert("You have successfully subscribed!");
+  //   } else {
+  //     alert("Please verify that you are a human!");
+  //   }
+  // };
+  const onChange = () => {
+    setVerified(true);
+  };
 
   const classes = useStyles();
 
@@ -157,30 +179,39 @@ export default function ProgramComments(props) {
     }
   };
 
-  const onSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
+    if (!token) {
+      alert("Yoou must verify the captcha");
+      setError("Yoou must verify the captcha");
+    } else {
+      setError("");
       setName("");
       setDescription("");
+
       axios
         .post(
           "http://localhost:9000/programs/" +
             props.match.params.id +
             "/programcomment",
-          { name: name, description: eventDescription }
+          { name: name, description: eventDescription, token }
         )
 
         .then(function (response) {
           onPageLoad();
+          alert("Submitted Succefully");
         })
 
-        .catch(function (error) {
-          console.log(error);
+        .catch(function (err) {
+          setError(err);
+          console.log(err);
+        })
+        .finally(() => {
+          reCaptcha.current.reset();
+          setToken("");
         });
-    },
-    [props.match.params.id, name, eventDescription]
-  );
-
+    }
+  });
   let eventCommentList = comments.map((comment, k) => (
     <ProgramComment comment={comment} key={k} />
   ));
@@ -260,8 +291,19 @@ export default function ProgramComments(props) {
                     />
                     <br />
                   </div>
+                  <ReCAPTCHA
+                    ref={reCaptcha}
+                    sitekey="6LecT-sZAAAAAM13m5jqQuMSJnMbxrif0ArqJqk2"
+                    onChange={(token) => setToken(token)}
+                    onExpired={(e) => setToken("")}
+                  />
 
-                  <button type="submit" id="myBtn" class="btn btn-success">
+                  <button
+                    type="submit"
+                    id="myBtn"
+                    class="btn btn-success"
+                    // onClick={handleSubscribe}
+                  >
                     Submit
                   </button>
                 </form>
