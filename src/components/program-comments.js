@@ -43,6 +43,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 import ReCAPTCHA from "react-google-recaptcha";
+import env from "react-dotenv";
 
 export default function ProgramComments(props) {
   const ProgramComment = (props) => (
@@ -108,21 +109,6 @@ export default function ProgramComments(props) {
     },
   }));
 
-  const recaptchaLoaded = () => {
-    console.log("capcha successfully loaded");
-  };
-
-  // const handleSubscribe = () => {
-  //   if (verified) {
-  //     alert("You have successfully subscribed!");
-  //   } else {
-  //     alert("Please verify that you are a human!");
-  //   }
-  // };
-  const onChange = () => {
-    setVerified(true);
-  };
-
   const classes = useStyles();
 
   const [expanded, setExpanded] = React.useState(false);
@@ -131,7 +117,6 @@ export default function ProgramComments(props) {
     setExpanded(!expanded);
   };
 
-  console.log(props.match.params);
   useEffect(() => {
     axios
       .get(
@@ -293,7 +278,7 @@ export default function ProgramComments(props) {
                   </div>
                   <ReCAPTCHA
                     ref={reCaptcha}
-                    sitekey="6LecT-sZAAAAAM13m5jqQuMSJnMbxrif0ArqJqk2"
+                    sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
                     onChange={(token) => setToken(token)}
                     onExpired={(e) => setToken("")}
                   />

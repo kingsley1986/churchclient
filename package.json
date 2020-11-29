@@ -22,6 +22,7 @@
     "react-bootstrap": "^1.4.0",
     "react-classname-module": "^0.1.1",
     "react-dom": "^16.14.0",
+    "react-dotenv": "^0.1.2",
     "react-google-recaptcha": "^2.1.0",
     "react-image-gallery": "^1.0.8",
     "react-images": "^1.1.7",

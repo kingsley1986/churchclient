@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AddComingWithModal from "../components/coming-with-modal.component";
@@ -34,6 +34,9 @@ import { spacing } from "@material-ui/system";
 import Paper from "@material-ui/core/Paper";
 import Button1 from "react-bootstrap/Button";
 
+import ReCAPTCHA from "react-google-recaptcha";
+import env from "react-dotenv";
+
 export default function EventAndComments(props) {
   const EventComment = (props) => (
     <div className={classes.root}>
@@ -55,6 +58,12 @@ export default function EventAndComments(props) {
   const theme = useTheme();
   const [oneEvents, setEventData] = useState([]);
   const [comments, setCommentData] = useState([]);
+
+  const [verified, setVerified] = useState(false);
+  const [error, setError] = useState("");
+  const [token, setToken] = useState("");
+  const reCaptcha = useRef();
+
   const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 550,
@@ -202,29 +211,47 @@ export default function EventAndComments(props) {
     }
   };
 
-  const onSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
+  const recaptchaLoaded = () => {
+    console.log("capcha successfully loaded");
+  };
+
+  const onChange = () => {
+    setVerified(true);
+  };
+
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
+    if (!token) {
+      alert("Yoou must verify the captcha");
+      setError("Yoou must verify the captcha");
+    } else {
+      setError("");
       setName("");
       setDescription("");
+
       axios
         .post(
           "http://localhost:9000/events/" +
             props.match.params.id +
             "/eventcomment",
-          { name: name, description: eventDescription }
+          { name: name, description: eventDescription, token }
         )
 
         .then(function (response) {
           onPageLoad();
+          alert("Submitted Succefully");
         })
 
-        .catch(function (error) {
-          console.log(error);
+        .catch(function (err) {
+          setError(err);
+          console.log(err);
+        })
+        .finally(() => {
+          reCaptcha.current.reset();
+          setToken("");
         });
-    },
-    [props.match.params.id, name, eventDescription]
-  );
+    }
+  });
 
   const updateGoing = (going) => {
     axios
@@ -358,6 +385,12 @@ export default function EventAndComments(props) {
             onChange={handleChange("description")}
             label="Description"
             style={{ width: "42vw" }}
+          />
+          <ReCAPTCHA
+            ref={reCaptcha}
+            sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
+            onChange={(token) => setToken(token)}
+            onExpired={(e) => setToken("")}
           />
         </FormControl>
         <Button type="submit" fullWidth variant="contained" color="primary">
