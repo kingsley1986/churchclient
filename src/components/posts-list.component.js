@@ -80,7 +80,7 @@ export default function Post() {
 
   useEffect(() => {
     axios
-      .get("https://cryptic-shelf-72177.herokuapp.com/posts")
+      .get("http://localhost:9000/posts")
       .then((response) => {
         setPostData([...response.data]);
       })

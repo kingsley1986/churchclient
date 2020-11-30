@@ -448,7 +448,7 @@ table {
   font-weight: "bold";
 }
 
-.form-control {
+/* .form-control {
   width: 80% !important;
 }
 @media screen and (max-width: 640px) {
@@ -459,4 +459,4 @@ table {
     width: 120% !important;
     margin-left: -47px;
   }
-}
+} */
