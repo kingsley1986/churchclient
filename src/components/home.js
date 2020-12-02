@@ -254,28 +254,27 @@ export default function Home(props) {
   const matches = useMediaQuery(theme.breakpoints.down("xs"));
   const classes = useStyles();
 
-  const BACKEND_URL = "http://localhost:9000/contact_form/";
+  // const BACKEND_URL = "http://localhost:9000/contact_form/";
 
-  const [values, setValues] = useState({});
+  // const [values, setValues] = useState({});
 
-  const saveForm = () => {
-    const sendAction = fetch(BACKEND_URL, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-
-    sendAction.then(() => {
-      alert("thanks");
-      setValues({ name: "", email: "", request: "" });
-    });
-    sendAction.catch((err) => {
-      alert(err.message);
-    });
-  };
+  // const saveForm = () => {
+  //   const sendAction = fetch(BACKEND_URL, {
+  //     method: "POST",
+  //     mode: "cors",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify(values),
+  //   });
+  //   sendAction.then(() => {
+  //     alert("thanks");
+  //     setValues({ name: "", email: "", request: "" });
+  //   });
+  //   sendAction.catch((err) => {
+  //     alert(err.message);
+  //   });
+  // };
   let eventLive = liveEventData.map((live, k) => (
     <EventLive live={live} key={k} />
   ));
@@ -472,9 +471,9 @@ export default function Home(props) {
       >
         {" "}
         <ContactForm
-          values={values}
-          setValues={setValues}
-          onSubmit={saveForm}
+        // values={values}
+        // setValues={setValues}
+        // onSubmit={saveForm}
         />
       </div>
     </div>
