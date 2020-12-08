@@ -117,6 +117,25 @@ export default function ProgramComments(props) {
     setExpanded(!expanded);
   };
 
+  const onDeleteEve = useCallback((e) => {
+    e.preventDefault();
+
+    axios
+      .delete(
+        "http://localhost:9000/programs/" + props.match.params.id + "/delete"
+      )
+
+      .then(function (response) {
+        onPageLoad();
+        alert("Submitted Succefully");
+      })
+
+      .catch(function (err) {
+        setError(err);
+        console.log(err);
+      });
+  });
+
   useEffect(() => {
     axios
       .get(
@@ -294,6 +313,15 @@ export default function ProgramComments(props) {
                 </form>
 
                 <p id="warning" />
+
+                <button
+                  type="submit"
+                  id="myBtn"
+                  class="btn btn-success"
+                  onClick={onDeleteEve}
+                >
+                  Delete
+                </button>
               </div>
             </div>
             <div className="row">
