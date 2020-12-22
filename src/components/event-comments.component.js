@@ -274,6 +274,27 @@ export default function EventAndComments(props) {
       ? oneEvents.going + oneEvents.coming_with + " " + "Person Coming"
       : oneEvents.going + oneEvents.coming_with + " " + "People are Coming";
 
+
+
+      const onDeleteEve = useCallback((e) => {
+        e.preventDefault();
+    
+        axios
+          .delete(
+            "http://localhost:9000/events/" + props.match.params.id + "/delete"
+          )
+    
+          .then(function (response) {
+            onPageLoad();
+            alert("Submitted Succefully");
+          })
+    
+          .catch(function (err) {
+            setError(err);
+            console.log(err);
+          });
+      });
+
   return (
     <Grid
       container
@@ -396,6 +417,14 @@ export default function EventAndComments(props) {
         <Button type="submit" fullWidth variant="contained" color="primary">
           Create Comment
         </Button>
+        <button
+                  type="submit"
+                  id="myBtn"
+                  class="btn btn-success"
+                  onClick={onDeleteEve}
+                >
+                  Delete
+                </button>
       </form>
       <CardContent>{eventCommentList}</CardContent>
     </Grid>

@@ -141,6 +141,25 @@ export default function PostAndComments(props) {
     ));
   }
 
+  const onDeleteEve = useCallback((e) => {
+    e.preventDefault();
+
+    axios
+      .delete(
+        "http://localhost:9000/posts/" + props.match.params.id + "/delete"
+      )
+
+      .then(function (response) {
+        onPageLoad();
+        alert("Submitted Succefully");
+      })
+
+      .catch(function (err) {
+        setError(err);
+        console.log(err);
+      });
+  });
+
   return (
     <div>
       <MDBCard className="my-5  override">
@@ -229,6 +248,14 @@ export default function PostAndComments(props) {
           </div>
         </form>
       </MDBContainer>
+      <button
+                  type="submit"
+                  id="myBtn"
+                  class="btn btn-success"
+                  onClick={onDeleteEve}
+                >
+                  Delete
+                </button>
       <hr></hr>
       <MDBContainer>{commentList}</MDBContainer>
     </div>

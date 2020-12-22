@@ -436,13 +436,15 @@ export default function Home(props) {
             programData.map((tile, index) => {
               return (
                 <GridListTile
+                style={{backgroundColor:"#f5f5dc",  padding: "4px"}}
                   className="shadow"
                   component={Link}
                   to={"/programs/" + tile._id + "/programcomments"}
                   key={Math.floor(Math.random() * new Date().getTime())}
                 >
-                  <img src={tile.programImage} alt={tile.title} />
+                  <img src={tile.programImage} alt={tile.title}  />
                   <GridListTileBar
+                  // style={{background: "green"}}
                     titlePosition="top"
                     title={tile.title}
                     // subtitle={<span>by: {tile.author}</span>}
@@ -455,11 +457,13 @@ export default function Home(props) {
                     //   </IconButton>
                     // }
                   />
-                  <GridListTileBar
+                 <p className="mysubtitle"  >
+                 <GridListTileBar
                     className="mySubtitle"
-                    style={{ fontSize: 10 }}
+                    style={{ fontSize: 10, }}
                     title={tile.description}
                   />
+                 </p>
                 </GridListTile>
               );
             })}
