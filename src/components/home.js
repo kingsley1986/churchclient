@@ -44,6 +44,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import moment from "moment";
 import { post } from "jquery";
+import jQuery from 'jquery'; 
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -279,6 +280,11 @@ export default function Home(props) {
     <EventLive live={live} key={k} />
   ));
 
+
+
+
+
+
   return (
     <div>
       <Slider className="slider-wrapper" autoplay={3000} infinite="true">
@@ -419,51 +425,51 @@ export default function Home(props) {
       </div>
       <br></br>
       <br></br>
+
+      
       <div className={classes.root} style={{ padding: 12 }}>
         <GridList
           cols={matches ? 1 : 3}
-          cellHeight={350}
-          spacing={15}
+          cellHeight={370}
+          spacing={10}
           className={classes.gridList}
-          style={{ paddingTop: 30 /*background: " #C0392B	",*/ }}
         >
-          {/* <GridListTile key="Subheader">
-        <ListSubheader component="div">
-          These are our different Activities
-        </ListSubheader>
-      </GridListTile> */}
           {programData.length > 0 &&
             programData.map((tile, index) => {
               return (
                 <GridListTile
-                style={{backgroundColor:"#f5f5dc",  padding: "4px"}}
-                  className="shadow"
+              
                   component={Link}
                   to={"/programs/" + tile._id + "/programcomments"}
                   key={Math.floor(Math.random() * new Date().getTime())}
                 >
-                  <img src={tile.programImage} alt={tile.title}  />
-                  <GridListTileBar
-                  // style={{background: "green"}}
-                    titlePosition="top"
-                    title={tile.title}
-                    // subtitle={<span>by: {tile.author}</span>}
-                    // actionIcon={
-                    //   <IconButton
-                    //     aria-label={`info about ${tile.title}`}
-                    //     className={classes.icon}
-                    //   >
-                    //     <InfoIcon />
-                    //   </IconButton>
-                    // }
-                  />
-                 <p className="mysubtitle"  >
-                 <GridListTileBar
-                    className="mySubtitle"
-                    style={{ fontSize: 10, }}
-                    title={tile.description}
-                  />
-                 </p>
+                 <div>
+        <title>Airbnb home</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Raleway:300,400,500,700|Varela+Round:400" rel="stylesheet" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <meta charSet="UTF-8" />
+        <div id="app" />
+       
+        <div className="container forprogramhome" >
+          <h2 className="text-center" style={{background: "#FF6347", color: "white", fontSize: "1.7rem", fontFamily: 'Bookman, URW Bookman L, serif'}}>{tile.title}</h2>
+          <div className="cards">
+         
+            <div className="cardhome">
+            <div className="card-body-program-home"  style={{backgroundImage: `url(${tile.programImage}), linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2))` }}> 
+                <span className="card-category" style={{background: "#A0522D", fontFamily: " Comic Sans MS, Comic Sans, cursive"}}>{tile. programtype}</span>
+                
+                <a className="card-link" href="#" />
+              </div>
+              <div className="card-footer">
+                <p style={{color: "black", fontSize: 14}}>{tile.description.substring(0, 240)}</p>
+              
+              </div>
+            </div>
+         
+          </div>
+        </div>
+      </div>
+               
                 </GridListTile>
               );
             })}
@@ -481,5 +487,6 @@ export default function Home(props) {
         />
       </div>
     </div>
+    
   );
 }

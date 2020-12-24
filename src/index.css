@@ -1,3 +1,157 @@
+
+
+
+
+/* here is the program css */
+div.container.forprogramhome {
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.container {
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* avatar style */
+
+
+
+/* banner style */
+.banner {
+  color: white;
+  text-align: center;
+  height: 100vh;
+  background-size: cover !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.banner h1 {
+  font-size: 50px;
+  font-weight: bold;
+  text-shadow: 0px 1px rgba(0, 0, 0, 0.2);
+}
+.banner p {
+  font-size: 25px;
+  font-weight: lighter;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 50px;
+}
+.banner .btn {
+  margin-top: 20px;
+}
+/* button style*/
+.btn-treehouse {
+  color: white;
+  padding: 25px 35px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 20px;
+  background: #6ad58b;
+  transition: background 0.3s ease;
+}
+.btn-treehouse:hover {
+  opacity: 1;
+  background: #3ac162;
+  text-decoration: none;
+  color: white;
+}
+
+/* cards style*/
+.cards {
+  display: flex;
+}
+.cardhome {
+  flex: 1 1 auto;
+  margin: 3px;
+  border-radius: 1px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+.cardhome:hover {
+  margin-top: -5px;
+}
+.card-body-program-home {
+  height: 180px;
+  background-size: cover;
+  color: white;
+  position: relative;
+}
+.card-user {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.card-category {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: lighter;
+  opacity: 0.9;
+}
+.card-description {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+.card-description h2 {
+  font-size: 20px;
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+.card-description p {
+  font-size: 14px;
+  font-weight: lighter;
+  opacity: 0.9;
+}
+.card-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+  background: black;
+  opacity: 0;
+}
+.card-link:hover {
+  opacity: 0.1;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.card-footer p {
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: lighter;
+  font-size: 12px;
+}
+.card-footer .controls {
+  display: flex;
+  align-items: center;
+}
+.card-footer .controls i {
+  padding: 0 10px;
+  color: black;
+  opacity: 0.2;
+}
+.card-footer .controls i:hover {
+  opacity: 0.4;
+}
+
+/* program css ends here */
+
+
 .fa.fa-user,
 .fa.fa-clock-o {
   padding-right: 10px;
