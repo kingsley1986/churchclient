@@ -141,7 +141,7 @@ export default function ProgramComments(props) {
       .get(
         "http://localhost:9000/programs/" +
           props.match.params.id +
-          "/programcomments"
+          "/programcommentsapi"
       )
 
       .then((response) => {
@@ -157,7 +157,7 @@ export default function ProgramComments(props) {
       .get(
         "http://localhost:9000/programs/" +
           props.match.params.id +
-          "/programcomments"
+          "/programcommentsapi"
       )
 
       .then((response) => {
@@ -197,7 +197,7 @@ export default function ProgramComments(props) {
         .post(
           "http://localhost:9000/programs/" +
             props.match.params.id +
-            "/programcomment",
+            "/createcommentapi",
           { name: name, description: eventDescription, token }
         )
 

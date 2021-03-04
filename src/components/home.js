@@ -44,7 +44,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import moment from "moment";
 import { post } from "jquery";
-import jQuery from 'jquery'; 
+import $ from "jquery";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -135,7 +135,7 @@ export default function Home(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:9000/programs")
+      .get("http://localhost:9000/programs/api")
       .then((response) => {
         setProgramData([...response.data]);
       })
@@ -146,7 +146,7 @@ export default function Home(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:9000/events/")
+      .get("http://localhost:9000/events/api")
       .then((response) => {
         setSlides([...response.data]);
         console.log(response.data);
@@ -279,11 +279,6 @@ export default function Home(props) {
   let eventLive = liveEventData.map((live, k) => (
     <EventLive live={live} key={k} />
   ));
-
-
-
-
-
 
   return (
     <div>
@@ -426,7 +421,6 @@ export default function Home(props) {
       <br></br>
       <br></br>
 
-      
       <div className={classes.root} style={{ padding: 12 }}>
         <GridList
           cols={matches ? 1 : 3}
@@ -438,38 +432,65 @@ export default function Home(props) {
             programData.map((tile, index) => {
               return (
                 <GridListTile
-              
                   component={Link}
                   to={"/programs/" + tile._id + "/programcomments"}
                   key={Math.floor(Math.random() * new Date().getTime())}
                 >
-                 <div>
-        <title>Airbnb home</title>
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Raleway:300,400,500,700|Varela+Round:400" rel="stylesheet" />
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <meta charSet="UTF-8" />
-        <div id="app" />
-       
-        <div className="container forprogramhome" >
-          <h2 className="text-center" style={{background: "#FF6347", color: "white", fontSize: "1.7rem", fontFamily: 'Bookman, URW Bookman L, serif'}}>{tile.title}</h2>
-          <div className="cards">
-         
-            <div className="cardhome">
-            <div className="card-body-program-home"  style={{backgroundImage: `url(${tile.programImage}), linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2))` }}> 
-                <span className="card-category" style={{background: "#A0522D", fontFamily: " Comic Sans MS, Comic Sans, cursive"}}>{tile. programtype}</span>
-                
-                <a className="card-link" href="#" />
-              </div>
-              <div className="card-footer">
-                <p style={{color: "black", fontSize: 14}}>{tile.description.substring(0, 240)}</p>
-              
-              </div>
-            </div>
-         
-          </div>
-        </div>
-      </div>
-               
+                  <div>
+                    <title>Airbnb home</title>
+                    <link
+                      href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Raleway:300,400,500,700|Varela+Round:400"
+                      rel="stylesheet"
+                    />
+                    <link
+                      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+                      rel="stylesheet"
+                    />
+                    <meta charSet="UTF-8" />
+                    <div id="app" />
+
+                    <div className="container forprogramhome">
+                      <h2
+                        className="text-center"
+                        style={{
+                          background: "#FF6347",
+                          color: "white",
+                          fontSize: "1.7rem",
+                          fontFamily: "Bookman, URW Bookman L, serif",
+                        }}
+                      >
+                        {tile.title}
+                      </h2>
+                      <div className="cards">
+                        <div className="cardhome">
+                          <div
+                            className="card-body-program-home"
+                            style={{
+                              backgroundImage: `url(${tile.programImage}), linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2))`,
+                            }}
+                          >
+                            <span
+                              className="card-category"
+                              style={{
+                                background: "#A0522D",
+                                fontFamily:
+                                  " Comic Sans MS, Comic Sans, cursive",
+                              }}
+                            >
+                              {tile.programtype}
+                            </span>
+
+                            <a className="card-link" href="#" />
+                          </div>
+                          <div className="card-footer">
+                            <p style={{ color: "black", fontSize: 14 }}>
+                              {tile.description.substring(0, 240)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </GridListTile>
               );
             })}
@@ -487,6 +508,5 @@ export default function Home(props) {
         />
       </div>
     </div>
-    
   );
 }

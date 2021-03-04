@@ -231,9 +231,9 @@ export default function EventAndComments(props) {
 
       axios
         .post(
-          "http://localhost:9000/events/" +
+          "http://localhost:9000/events/api/" +
             props.match.params.id +
-            "/eventcomment",
+            "/eventcomment",         
           { name: name, description: eventDescription, token }
         )
 
@@ -274,26 +274,24 @@ export default function EventAndComments(props) {
       ? oneEvents.going + oneEvents.coming_with + " " + "Person Coming"
       : oneEvents.going + oneEvents.coming_with + " " + "People are Coming";
 
+  const onDeleteEve = useCallback((e) => {
+    e.preventDefault();
 
+    axios
+      .delete(
+        "http://localhost:9000/events/" + props.match.params.id + "/delete"
+      )
 
-      const onDeleteEve = useCallback((e) => {
-        e.preventDefault();
-    
-        axios
-          .delete(
-            "http://localhost:9000/events/" + props.match.params.id + "/delete"
-          )
-    
-          .then(function (response) {
-            onPageLoad();
-            alert("Submitted Succefully");
-          })
-    
-          .catch(function (err) {
-            setError(err);
-            console.log(err);
-          });
+      .then(function (response) {
+        onPageLoad();
+        alert("Submitted Succefully");
+      })
+
+      .catch(function (err) {
+        setError(err);
+        console.log(err);
       });
+  });
 
   return (
     <Grid
@@ -418,13 +416,13 @@ export default function EventAndComments(props) {
           Create Comment
         </Button>
         <button
-                  type="submit"
-                  id="myBtn"
-                  class="btn btn-success"
-                  onClick={onDeleteEve}
-                >
-                  Delete
-                </button>
+          type="submit"
+          id="myBtn"
+          class="btn btn-success"
+          onClick={onDeleteEve}
+        >
+          Delete
+        </button>
       </form>
       <CardContent>{eventCommentList}</CardContent>
     </Grid>
