@@ -358,9 +358,7 @@ export default function Home(props) {
                           {" "}
                           <button
                             type="button"
-                            class="
-                      btn btn-md btn-outline-success py-0 
-                      "
+                            class="btn btn-md btn-outline-success py-0"
                           >
                             {goingPeople(slide.going, slide.coming_with)}
                           </button>

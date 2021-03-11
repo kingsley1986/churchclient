@@ -33,7 +33,7 @@
     "react-modal": "^3.11.2",
     "react-photo-gallery": "^8.0.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "4.0.3",
     "react-slick": "^0.27.13",
     "react-time-ago": "^6.2.1",
     "reactstrap": "^8.7.1",
@@ -42,7 +42,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI= react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
